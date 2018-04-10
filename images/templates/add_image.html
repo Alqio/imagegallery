@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div id="image_upload">
+    <form class="form-horizonal" name="uploadform" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="col-md-6">
+            {{ form.as_p }}
+        
+            <div class="controls">
+                <button type="submit" class="btn">Lisää kuva</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endif %}
+{% endblock %}
+

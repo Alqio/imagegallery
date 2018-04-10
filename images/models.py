@@ -12,3 +12,9 @@ class Image(models.Model):
             default='images/default_game_img.png')
 
 
+class Album(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    created = models.DateField(auto_now=False, auto_now_add=True)
+    description = models.CharField(max_length=255)
+    creator = models.IntegerField()
+    images = models.ManyToManyField(Image) 
