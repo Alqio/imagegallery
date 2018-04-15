@@ -53,7 +53,7 @@ def signup_user(request):
         user.is_active = False
         user.save()
         mail_subject = 'Activate your account'
-        message = render_to_string('webstore/email.html', {
+        message = render_to_string('imagegallery/email.html', {
             'user': user,
             'domain': get_current_site(request).domain,
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -63,7 +63,7 @@ def signup_user(request):
         connection.open()
 
         email_message = mail.EmailMessage(
-            mail_subject, message, 'support@webstore.com',
+            mail_subject, message, 'support@saarangalleria.fi',
             [email, ], connection=connection)
         email_message.send()
         connection.close()

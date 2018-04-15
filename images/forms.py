@@ -8,13 +8,13 @@ class AlbumForm(forms.ModelForm):
         model = Album
         fields = ['name', 'description']
 
-	widgets = {
+        widgets = {
             'description': Textarea(attrs={
                 'cols': 40,
                 'rows': 4,
                 'class': 'form-control'
             })
-	}
+        }
 
 class ImageForm(forms.ModelForm):
     class Meta:
