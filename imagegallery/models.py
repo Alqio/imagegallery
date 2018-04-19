@@ -10,4 +10,5 @@ class UserProfile(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     uploaded_images = models.ManyToManyField(Image)
-    is_admin = models.BooleanField()	
+    is_admin = models.BooleanField(null=False, default=False)	
+

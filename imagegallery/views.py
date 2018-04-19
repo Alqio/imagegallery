@@ -20,11 +20,14 @@ def login_user(request):
     logout(request)
     username = password = ''
     if request.POST:
+ 
         username = request.POST['username']
         password = request.POST['password']
 
         user = authenticate(username=username, password=password)
-        
+        print(user)
+        print(username, password)
+
         if user is not None:
             if user.is_active:
                 login(request, user)
@@ -50,31 +53,19 @@ def signup_user(request):
             return render(request, 'imagegallery/signup.html',
                           {"message": "Username '" +
                            username + "' is already taken"})
-        user.is_active = False
+        user.is_active = True
         user.save()
-        mail_subject = 'Activate your account'
-        message = render_to_string('imagegallery/email.html', {
-            'user': user,
-            'domain': get_current_site(request).domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user)
-        })
-        connection = mail.get_connection()
-        connection.open()
-
-        email_message = mail.EmailMessage(
-            mail_subject, message, 'support@saarangalleria.fi',
-            [email, ], connection=connection)
-        email_message.send()
-        connection.close()
-
+        
         profile = UserProfile.objects.create(user=user)
+
         if request.POST.get('admin', False):
             profile.is_admin = True
         else:
             profile.is_admin = False
         profile.save()
-        return render(request, 'imagegallery/verify.html')
+        print("created user with",username,password)
+        return redirect('/')
+    
     return render(request, 'imagegallery/signup.html')
 
 
@@ -86,20 +77,4 @@ def logout_user(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect('/')
-
-
-def activate(request, uidb64, token):
-    """
-    Activates an account, and sends a verification mail.
-    """
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except:
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        login(request, user)
-        return redirect('/')
 

@@ -15,6 +15,13 @@ def index(request):
    return HttpResponse("Moro!") 
 
 
+def view_album(request, name):
+
+    album = Album.objects.get(name=name)
+    images = album.images
+    return HttpResponse("katsotaan albumia " + name)
+
+
 def add_image(request):
     
     if request.method == 'POST':
@@ -37,7 +44,11 @@ def add_album(request):
         form = AlbumForm(request.POST)
         
         if form.is_valid():
-            album = form.save()
+            album = form.save(commit=False)
+            user = request.user
+            profile = UserProfile.objects.get(user=user)
+            album.creator = profile.id
+            album.save()
             return redirect('/')
 
     else:

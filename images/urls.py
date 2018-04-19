@@ -7,6 +7,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^add_album', views.add_album, name='add_album'),
-    url(r'^add_image', views.add_image, name='add_image')
+    url(r'^add_image', views.add_image, name='add_image'),
+    url(r'^album/<slug:name>', views.view_album, name='view_album')
 ]
 
