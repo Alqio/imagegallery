@@ -16,9 +16,18 @@ class AlbumForm(forms.ModelForm):
             })
         }
 
+
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['name', 'description', 'pic']
+    choices=[(obj.id, obj.name) for obj in Album.objects.all()]
+    album = forms.ChoiceField(choices=choices)
 
-        
+
+class ExtendedImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['name', 'description', 'pic']
+
+       

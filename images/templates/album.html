@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<div id="album_upload">
+    <form class="form-horizonal" name="uploadform" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="col-md-6">
+            {% for image in images %}
+                <div class="image">
+                    <p>{{image.name}}</p>
+                    <img src={{image.pic.url}}>
+                </div>
+            {% endfor %}
+        </div>
+    </form>
+</div>
+
+{% endif %}
+{% endblock %}
+

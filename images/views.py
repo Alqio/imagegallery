@@ -16,10 +16,15 @@ def index(request):
 
 
 def view_album(request, name):
+    
+    try:
+        album = Album.objects.get(name=name)
+    except:
+        return redirect('/')
 
-    album = Album.objects.get(name=name)
     images = album.images
-    return HttpResponse("katsotaan albumia " + name)
+    context = {'images': images}
+    return render(request, 'album.html', context)
 
 
 def add_image(request):
@@ -32,10 +37,15 @@ def add_image(request):
             image.uploader = request.user.id 
             image.pic = request.FILES['pic']
             image.save()
+	    
+            album = Album.objects.get(pk=request['album'])
+            album.images.add(image)
+            album.save()
 
-            album = Album.objects.get()
+    else:
+        form = ImageForm()
 
-    return HttpResponse("lisäämässä kuvia")
+    return render(request, 'add_image.html', {'form': form})
 
 
 def add_album(request):
