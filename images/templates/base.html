@@ -11,11 +11,11 @@
         <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 	
-	<link rel="stylesheet" type="text/css" href="{% static '/shop/style.css' %}" />
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
         <script type="text/javascript" src="{% static 'imagegallery/js/login.js' %}"></script>
     </head>
@@ -29,10 +29,11 @@
 
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
+                        <li id="albums"><a href="/albums/">Albumit</a></li>
                         {% if user.is_authenticated %}
-                            <li id="myimages"><a href="/myimages/">Lataamani kuvat</a></li>
                             {% if user.userprofile.is_admin %}
                                 <li id="publish"><a href="/add_image/">Lisää kuvia</a></li>
+                                <li id="add_album"><a href="/add_album/">Lisää albumi</a></li>
                             {% endif %}
                         {% endif %}
                     </ul>
@@ -67,6 +68,7 @@
             <p></p>
             <div class="container">
                 <div class="row">
+                    {% include 'messages.html' %}
                     {% block content %}
                     {% endblock %}
                 </div>

@@ -21,6 +21,14 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['name', 'description', 'pic']
+        widgets = {
+            'description': Textarea(attrs={
+                'cols': 40,
+                'rows': 4,
+                'class': 'form-control'
+            })
+        }
+
     choices=[(obj.id, obj.name) for obj in Album.objects.all()]
     album = forms.ChoiceField(choices=choices)
 

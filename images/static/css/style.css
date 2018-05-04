@@ -1,0 +1,50 @@
+body {
+    background-color: #FEFEFE;
+    color: #454545;
+}
+.pic {
+    border: 1px solid black;
+
+}
+.navbar {
+    border-radius:0 !important;
+}
+.game_icon {
+    padding: 5%;
+}
+.search-container {
+	padding-top: 5%;
+}
+
+.album-listing {
+    display:block;
+    list-style-type: none;
+}
+
+.album-info {
+    float:right;
+}
+.image-block {
+    background-color: rgba(184, 213, 227, 0.17);*
+}
+.image {
+	align-items: center;
+	padding-bottom: 2%;
+	border-bottom: 5px;
+	/*background-color: rgba(184, 213, 227, 0.17);*/
+}
+.game:hover {
+	background-color: rgba(184, 213, 227, 0.46);
+	/*background-color: #89bac0;*/
+}
+
+.images {
+    display: inline;
+}
+
+.image_icon {
+	display: block;
+	max-width:256px;
+	max-height:128px;
+    width: auto;
+}

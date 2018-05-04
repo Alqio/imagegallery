@@ -7,8 +7,15 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('add_album', views.add_album, name='add_album'),
-    path('add_image', views.add_image, name='add_image'),
-    path('album/<slug:name>', views.view_album, name='view_album')
+    path('add_album/', views.add_album, name='add_album'),
+    path('add_image/', views.add_image, name='add_image'),
+    path('album/<slug:name>/', views.view_album, name='view_album'),
+    path('image/<slug:name>/', views.view_image, name='view_image'),
+    path('album/<slug:album_name>/image/<slug:name>/', views.view_image, name='view_image')
 ]
+
+
+if settings.DEBUG: 
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 

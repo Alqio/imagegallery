@@ -1,21 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if user.is_authenticated %}
 
-<div id="album_upload">
-    <form class="form-horizonal" name="uploadform" enctype="multipart/form-data" method="post">
-        {% csrf_token %}
-        <div class="col-md-6">
-            {% for image in images %}
-                <div class="image">
-                    <p>{{image.name}}</p>
-                    <img src={{image.pic.url}}>
-                </div>
-            {% endfor %}
-        </div>
-    </form>
+<div id="album col-md-12">
+    <div class="col-md-10 images">
+        {% for image in items %}
+            <div class="col-md-4 image-block"> 
+                <h2>{{image.name}}</h2>
+                <a href="image/{{image.name}}"><img class="image_icon" src={{image.pic.url}}></a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-md-2 album-info">
+        <h1>{{album.name}}</h1>
+        <p>{{amount}} image(s)</p>
+        <p>Created {{album.created}}</p>
+        <p>{{album.description}}</p>
+    </div>
+    
+    <div class="col-md-10">
+        {% include 'paginator.html' %}
+    </div>
 </div>
 
-{% endif %}
+
 {% endblock %}
 

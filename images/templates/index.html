@@ -2,8 +2,18 @@
 {% block content %}
 
 <div id="index">
-    Moro!
+    <div class="col-md-12">
+    <ul class="album-listing"> 
+        {% for album in items %}
+            <li><h2><a
+         href="/album/{{album.name}}">{{album.name}}</a></h2></li>
+        {% endfor %} 
+    
+    </ul>
+    </div>
 </div>
+
+{% include 'paginator.html' %}
 
 {% endblock %}
 

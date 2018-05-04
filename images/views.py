@@ -8,11 +8,45 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from images.forms import ImageForm, AlbumForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 
-# Create your views here.
+
+def create_pagination(request, items_all):
+    nof_items_per_page = 6
+
+    p = Paginator(items_all, nof_items_per_page)
+    page = request.GET.get('page')
+
+    try:
+        items = p.page(page)
+        page = int(page)
+    except PageNotAnInteger:
+        items = p.page(1)
+        page = 1
+    except EmptyPage:
+        items = p.page(p.num_pages)
+        page = p.num_pages
+
+    context = {
+        'items': items,
+        'pages': p.page_range,
+        'current_page': page,
+        'amount': items_all.count(),
+        'search_term': '?'
+    }
+
+    return context
+
 
 def index(request):
-    return render(request, 'index.html')
+
+    albums_all = Album.objects.all()
+
+    print(albums_all)
+
+    context = create_pagination(request, albums_all)
+    return render(request, 'index.html', context)
 
 
 def view_album(request, name):
@@ -23,9 +57,25 @@ def view_album(request, name):
     except:
         return redirect('/')
 
-    images = album.images.all()
-    context = {'images': images}
+    images_all = album.images.all()
+    context = create_pagination(request, images_all)
+    context.update({'album': album})
     return render(request, 'album.html', context)
+
+
+def view_image(request, name, album_name="default"):
+    print(name)
+    
+    try:
+        image = Image.objects.get(name=name)
+    except:
+        return redirect('/')
+
+    context = {
+        'image': image,
+    }
+
+    return render(request, 'image.html', context)
 
 
 def add_image(request):
@@ -35,13 +85,22 @@ def add_image(request):
         
         if form.is_valid():
             image = form.save(commit=False)
-            image.uploader = request.user.id 
-            image.pic = request.FILES['pic']
+            image.uploader = request.user.id
+
+            try:
+                image.pic = request.FILES['pic']
+            except:
+                messages.info(request, 'Kuvalle ei annettu kuvaa, käytetään oletusta.')
+                print("No pic provided, using default image.")
+            
             image.save()
-	    
-            album = Album.objects.get(pk=request['album'])
+
+            album = Album.objects.get(pk=request.POST['album'])
             album.images.add(image)
             album.save()
+            form = ImageForm()
+
+            messages.success(request, 'Kuva ladattiin onnistuneesti!')
 
     else:
         form = ImageForm()
@@ -60,6 +119,7 @@ def add_album(request):
             profile = UserProfile.objects.get(user=user)
             album.creator = profile.id
             album.save()
+            messages.success(request, 'Albumi ladattiin onnistuneesti!')
             return redirect('/')
 
     else:

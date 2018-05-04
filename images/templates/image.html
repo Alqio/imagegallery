@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="col-md-12">
+    
+    <div class="jumbotron">
+        <h1 class="col-sm-9">{{image.name}}</h1>
+        <h4>Omistaja: {{image.uploader}}</h4>
+        <h4>Julkaistu {{image.uploaded}}</h4>
+        <h5>{{image.description}}</h5>
+    </div>
+    
+    <img src={{image.pic.url}} class="pic">
+
+</div>
+
+{% endblock %}
+
