@@ -26,6 +26,7 @@ body {
 }
 .image-block {
     background-color: rgba(184, 213, 227, 0.17);*
+    padding-bottom: 2%;
 }
 .image {
 	align-items: center;

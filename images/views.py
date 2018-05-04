@@ -38,22 +38,24 @@ def create_pagination(request, items_all):
 
     return context
 
-
 def index(request):
+    return HttpResponse("moi")
+
+
+def albums(request):
 
     albums_all = Album.objects.all()
 
     print(albums_all)
 
     context = create_pagination(request, albums_all)
-    return render(request, 'index.html', context)
+    return render(request, 'albums.html', context)
 
 
-def view_album(request, name):
-    print(name)
+def view_album(request, id):
 
     try:
-        album = Album.objects.get(name=name)
+        album = Album.objects.get(pk=id)
     except:
         return redirect('/')
 
@@ -63,11 +65,10 @@ def view_album(request, name):
     return render(request, 'album.html', context)
 
 
-def view_image(request, name, album_name="default"):
-    print(name)
+def view_image(request, id, album_id):
     
     try:
-        image = Image.objects.get(name=name)
+        image = Image.objects.get(pk=id)
     except:
         return redirect('/')
 
