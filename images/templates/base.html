@@ -30,7 +30,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         {% if user.is_authenticated %}
-                            <li id="games"><a href="/mygames/">Lataamani kuvat</a></li>
+                            <li id="myimages"><a href="/myimages/">Lataamani kuvat</a></li>
                             {% if user.userprofile.is_admin %}
                                 <li id="publish"><a href="/add_image/">Lisää kuvia</a></li>
                             {% endif %}

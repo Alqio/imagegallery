@@ -18,3 +18,6 @@ class Album(models.Model):
     description = models.CharField(max_length=255)
     creator = models.IntegerField()
     images = models.ManyToManyField(Image) 
+
+    def __str__(self):
+        return self.name

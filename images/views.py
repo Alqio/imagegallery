@@ -12,17 +12,18 @@ from images.forms import ImageForm, AlbumForm
 # Create your views here.
 
 def index(request):
-   return HttpResponse("Moro!") 
+    return render(request, 'index.html')
 
 
 def view_album(request, name):
-    
+    print(name)
+
     try:
         album = Album.objects.get(name=name)
     except:
         return redirect('/')
 
-    images = album.images
+    images = album.images.all()
     context = {'images': images}
     return render(request, 'album.html', context)
 
