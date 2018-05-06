@@ -4,7 +4,8 @@ body {
 }
 .pic {
     border: 1px solid black;
-
+    width: auto;
+    height: auto;
 }
 .navbar {
     border-radius:0 !important;

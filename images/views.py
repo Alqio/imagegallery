@@ -40,7 +40,7 @@ def create_pagination(request, items_all, item_name='items'):
 
 
 def index(request):
-    return HttpResponse("moi")
+    return redirect('albums')
 
 
 def albums(request):
