@@ -10,9 +10,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from images.forms import ImageForm, AlbumForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
+from django.db.models import Q
 
-
-def create_pagination(request, items_all):
+def create_pagination(request, items_all, item_name='items'):
     nof_items_per_page = 6
 
     p = Paginator(items_all, nof_items_per_page)
@@ -29,7 +29,7 @@ def create_pagination(request, items_all):
         page = p.num_pages
 
     context = {
-        'items': items,
+        item_name: items,
         'pages': p.page_range,
         'current_page': page,
         'amount': items_all.count(),
@@ -37,6 +37,7 @@ def create_pagination(request, items_all):
     }
 
     return context
+
 
 def index(request):
     return HttpResponse("moi")
@@ -65,15 +66,20 @@ def view_album(request, id):
     return render(request, 'album.html', context)
 
 
-def view_image(request, id, album_id):
+def view_image(request, id, album_id=1):
     
     try:
         image = Image.objects.get(pk=id)
     except:
         return redirect('/')
-
+   
+    try:
+        uploader = UserProfile.objects.get(pk=image.uploader).user.username
+    except:
+        uploader = "Tuntematon"
     context = {
         'image': image,
+        'uploader':uploader
     }
 
     return render(request, 'image.html', context)
@@ -120,11 +126,41 @@ def add_album(request):
             profile = UserProfile.objects.get(user=user)
             album.creator = profile.id
             album.save()
-            messages.success(request, 'Albumi ladattiin onnistuneesti!')
+            messages.success(request, 'Albumi luotiin onnistuneesti!')
             return redirect('/')
 
     else:
         form = AlbumForm()
 
     return render(request, 'add_album.html', {'form': form})
- 
+
+
+def search(request):
+    uri = request.build_absolute_uri()
+    print(uri)
+
+    if request.method == 'GET':  # If the form is submitted
+        search_term = request.GET.get('search')
+
+        try:
+            search_words = search_term.split(' ')
+        except:
+            messages.error(request, 'Etsiminen ei onnistunut.')
+            return redirect('index')
+        
+        image_results = Image.objects.filter(Q(name__contains=search_words[0])
+                | Q(description__contains=search_words[0]))
+
+        if len(search_words) > 1:
+            for w in search_words:
+                if w != search_words[0]:
+                    image_results = image_results.filter(Q(name__contains=w)
+                            | Q(description__contains=w))
+
+        context = create_pagination(request, image_results)
+
+        context.update({"search_term": ("?search=" + search_term + "&")})
+
+    return render(request, 'search_results.html', context)
+
+

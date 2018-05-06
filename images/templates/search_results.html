@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="album col-md-12">
+    <div class="col-md-10 images">
+        {% for image in items %}
+            <div class="col-md-4 image-block"> 
+                <h2>{{image.name}}</h2>
+                <a href="/image/{{image.pk}}"><img class="image_icon" src={{image.pic.url}}></a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-md-10">
+        {% include 'paginator.html' %}
+    </div>
+</div>
+
+
+{% endblock %}
+

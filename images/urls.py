@@ -8,10 +8,11 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('albums/', views.albums, name='albums'),
+    path('search_results/', views.search, name="search"),
     path('add_album/', views.add_album, name='add_album'),
     path('add_image/', views.add_image, name='add_image'),
     path('album/<int:id>/', views.view_album, name='view_album'),
-    path('image/<slug:name>/', views.view_image, name='view_image'),
+    path('image/<int:id>/', views.view_image, name='view_image'),
     path('album/<int:album_id>/image/<int:id>/', views.view_image, name='view_image')
 ]
 
