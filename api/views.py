@@ -35,12 +35,12 @@ def check_login_username(request):
         return JsonResponse({'success': False})
 
 
-def get_album_images(request):
+def get_album_images(request, album_id):
     if request.method == 'GET':
-        album_id = request.get('album_id')
         album = Album.objects.get(id=album_id)
         images = album.images.all()
         image_list = []
+ 
         for image in images:
             dd = {
                 'image': {
@@ -48,13 +48,15 @@ def get_album_images(request):
                     'description': image.description,
                     'width': image.pic.width,
                     'height': image.pic.height,
-                    'pic': pic.url
+                    'pic': image.pic.url
                 }
             }
             image_list.append(dd)
 
         result = JsonResponse({'results': image_list})
- 
+        
+        print(result)
+
         return result 
 
 

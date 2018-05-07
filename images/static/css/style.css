@@ -6,6 +6,9 @@ body {
     border: 1px solid black;
     width: auto;
     height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 .navbar {
     border-radius:0 !important;
