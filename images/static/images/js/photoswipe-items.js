@@ -39,7 +39,7 @@ $(document).ready(function() {
 
 
 
-    $(".image_icon").click(function() {
+    $(".img-description-layer").click(function() {
         var parent = $(this).parent();
 
         let image_id = parent.find(".image-id").text();
