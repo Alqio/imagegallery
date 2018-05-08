@@ -4,14 +4,15 @@
 <div id="album col-md-12">
     <div class="col-md-10 images">
         {% for image in items %}
-            <div class="col-md-3 img-wrap"> 
-                <img class="image-icon" src={{image.0.pic.url}}>
-                <!--
-                <div class="img-description-layer">
-                    <p class="img-description">{{image.0.name}}</p>
-                </div>-->
-                <p class="hidden image-id">{{image.1}}</p>
-                
+            <div class="col-md-3">
+                <div class="img-wrap"> 
+                    <img class="image-icon" src={{image.0.pic.url}}>
+                    <div class="img-description-layer">
+                        <p class="img-description">{{image.0.name}}</p>
+                    </div>
+                    <p class="hidden image-id">{{image.1}}</p>
+                    
+                </div>
             </div>
         {% endfor %}
     </div>
