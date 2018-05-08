@@ -13,7 +13,7 @@ from django.contrib import messages
 from django.db.models import Q
 
 def create_pagination(request, items_all, item_name='items'):
-    nof_items_per_page = 6
+    nof_items_per_page = 24
 
     p = Paginator(items_all, nof_items_per_page)
     page = request.GET.get('page')
@@ -62,6 +62,10 @@ def view_album(request, id):
 
     images_all = album.images.all()
     context = create_pagination(request, images_all)
+    items_amount = len(context["items"])
+    context["items"] = zip(context["items"], list(range(0, items_amount)))
+    
+
     context.update({'album': album})
     return render(request, 'album_photoswipe.html', context)
 

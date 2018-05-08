@@ -4,9 +4,14 @@
 <div id="album col-md-12">
     <div class="col-md-10 images">
         {% for image in items %}
-            <div class="col-md-4 image-block"> 
-                <h2>{{image.name}}</h2>
-                <img class="image_icon" src={{image.pic.url}}>
+            <div class="col-md-3 img-wrap"> 
+                <img class="image-icon" src={{image.0.pic.url}}>
+                <!--
+                <div class="img-description-layer">
+                    <p class="img-description">{{image.0.name}}</p>
+                </div>-->
+                <p class="hidden image-id">{{image.1}}</p>
+                
             </div>
         {% endfor %}
     </div>
@@ -16,6 +21,7 @@
         <p>{{amount}} image(s)</p>
         <p>Created {{album.created}}</p>
         <p>{{album.description}}</p>
+        <p class="hidden" id="album-id">{{album.pk}}</p>
     </div>
     
     <div class="col-md-10">

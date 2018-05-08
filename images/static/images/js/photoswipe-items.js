@@ -10,7 +10,7 @@ $(document).ready(function() {
             return true;
         }
     }
-    var album_id = 2;
+    var album_id = $('#album-id').text(); 
     
     console.log("/api/album/" + album_id + "/");
     
@@ -23,7 +23,7 @@ $(document).ready(function() {
             let image = {};
             let item = list_item["image"];
 		    let text = item["name"];
-            console.log(text);
+
             image["src"] = item["pic"];
             image["w"] = item["width"];
             image["h"] = item["height"];
@@ -40,6 +40,12 @@ $(document).ready(function() {
 
 
     $(".image_icon").click(function() {
+        var parent = $(this).parent();
+
+        let image_id = parent.find(".image-id").text();
+        options["index"] = parseInt(image_id);
+        console.log("image_id: " + image_id);
+        
         var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
         gallery.init();
         console.log("gallery inited!");
