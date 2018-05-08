@@ -63,7 +63,7 @@ def view_album(request, id):
     images_all = album.images.all()
     context = create_pagination(request, images_all)
     context.update({'album': album})
-    return render(request, 'album.html', context)
+    return render(request, 'album_photoswipe.html', context)
 
 
 def view_image(request, id, album_id=1):
