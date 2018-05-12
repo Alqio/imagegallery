@@ -16,7 +16,13 @@ $(document).ready(function() {
     
     var items = [];
 
-    $.getJSON("/api/album/" + album_id + "/", function(data) {
+    path = "/api/album/" + album_id + "/"
+    if (album_id == "") {
+        console.log("Could not find album id. Going to index instead.");
+        path = "/api/index/";
+    }
+
+    $.getJSON(path, function(data) {
         console.log("ITEMS: ");
         data["results"].forEach(function(list_item) {
             console.log(list_item["image"]);

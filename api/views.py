@@ -59,5 +59,25 @@ def get_album_images(request, album_id):
 
         return result 
 
+def get_index_images(request):
+    if request.method == "GET":
+        images = Image.objects.all().order_by('-id')[:12]
+        
+        image_list = []
+ 
+        for image in images:
+            dd = {
+                'image': {
+                    'name': image.name,
+                    'description': image.description,
+                    'width': image.pic.width,
+                    'height': image.pic.height,
+                    'pic': image.pic.url
+                }
+            }
+            image_list.append(dd)
 
+        result = JsonResponse({'results': image_list})
+        
+        return result 
 

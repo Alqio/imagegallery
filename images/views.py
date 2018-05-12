@@ -7,7 +7,7 @@ from django.views.generic import DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from images.forms import ImageForm, AlbumForm
+from images.forms import ImageForm, AlbumForm, MultipleImageForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.db.models import Q
@@ -28,11 +28,18 @@ def create_pagination(request, items_all, item_name='items'):
         items = p.page(p.num_pages)
         page = p.num_pages
 
+    # count works only on django query sets
+    # len has to be used if items_all is a regular list 
+    try:
+        amount = items_all.count()
+    except:
+        amount = len(items_all)
+
     context = {
         item_name: items,
         'pages': p.page_range,
         'current_page': page,
-        'amount': items_all.count(),
+        'amount': amount,
         'search_term': '?'
     }
 
@@ -40,7 +47,7 @@ def create_pagination(request, items_all, item_name='items'):
 
 
 def index(request):
-    images = Image.objects.all()
+    images = Image.objects.all().order_by("-id")[:12]
     context = create_pagination(request, images)
     items_amount = len(context["items"])
     print("items amount", items_amount)
@@ -51,10 +58,15 @@ def index(request):
 def albums(request):
 
     albums_all = Album.objects.all()
+    
+    items_all = []
+ 
+    for album in albums_all:
+        image = album.images.latest('uploaded')
+        pair = (album, image)
+        items_all.append(pair)
 
-    print(albums_all)
-
-    context = create_pagination(request, albums_all)
+    context = create_pagination(request, items_all)
     return render(request, 'albums.html', context)
 
 

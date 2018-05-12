@@ -5,8 +5,10 @@
     <div class="col-md-12">
     <ul class="album-listing"> 
         {% for album in items %}
-            <li><h2><a
-         href="/album/{{album.pk}}">{{album.name}}</a></h2></li>
+            <div class="col-md-4">
+                <li><h2><a href="/album/{{album.0.pk}}">{{album.0.name}}</a></h2></li>
+                <img class="image-icon img-responsive" src="{{album.1.pic.url}}">
+            </div>
         {% endfor %} 
     
     </ul>
