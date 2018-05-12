@@ -15,6 +15,38 @@ body {
 }
 .navbar {
     border-radius:0 !important;
+    min-height: 80px;
+    background-color: white;
+}
+.navbar.navbar-default {
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.navbar-a {
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+}
+.navbar-a::after {
+  content: '';
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  height: 2px;
+  background: red;
+  transform: scaleX(0);
+  transition: transform .35s ease;
+}
+.navbar-a:hover::after {
+  transform: scaleX(1);
+}
+
+.navbar.navbar-default .navbar-collapse {
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 .search-container {
 	padding-top: 5%;

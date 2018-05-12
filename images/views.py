@@ -40,7 +40,12 @@ def create_pagination(request, items_all, item_name='items'):
 
 
 def index(request):
-    return redirect('albums')
+    images = Image.objects.all()
+    context = create_pagination(request, images)
+    items_amount = len(context["items"])
+    print("items amount", items_amount)
+    context["items"] = zip(context["items"], list(range(0, items_amount)))
+    return render(request, 'index.html', context)
 
 
 def albums(request):
@@ -64,9 +69,8 @@ def view_album(request, id):
     context = create_pagination(request, images_all)
     items_amount = len(context["items"])
     context["items"] = zip(context["items"], list(range(0, items_amount)))
-    
-
     context.update({'album': album})
+
     return render(request, 'album_photoswipe.html', context)
 
 
