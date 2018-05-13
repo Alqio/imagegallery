@@ -62,7 +62,11 @@ def albums(request):
     items_all = []
  
     for album in albums_all:
-        image = album.images.latest('uploaded')
+        try:
+            image = album.images.latest('uploaded').pic.url
+            print(image)
+        except:
+            image = "images/default_game_img.png"
         pair = (album, image)
         items_all.append(pair)
 

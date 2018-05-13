@@ -90,10 +90,13 @@ DATABASES = {
 }
 
 try:
-    import imagegallery.local_settings
+    from imagegallery.local_settings import get_debug
     print("Loaded local settings! --> using sqlite and DEBUG=True")
+    DEBUG = get_debug()
+    print(DEBUG)
 except Exception as e:
     print("could not find local settings. if you are on heroku, good! if you are running on local machine, oh boy that sucks :/")
+    print(e)
     pass
 
 """
