@@ -7,7 +7,7 @@ from django.views.generic import DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from images.forms import ImageForm, AlbumForm, MultipleImageForm
+from images.forms import ImageForm, AlbumForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.db.models import Q
@@ -109,7 +109,6 @@ def add_image(request):
     
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
-        multiple_image_form = MultipleImageForm(request.POST, request.FILES)
 
         if form.is_valid():
             image = form.save(commit=False)
@@ -123,20 +122,13 @@ def add_image(request):
             
             image.save()
 
-            album = Album.objects.get(pk=request.POST['album'])
-            album.images.add(image)
-            album.save()
+            #album = Album.objects.get(pk=request.POST['album'])
+            #album.images.add(image)
+            #album.save()
             form = ImageForm()
 
             messages.success(request, 'Kuva ladattiin onnistuneesti!')
         
-        if multiple_image_form.is_valid():
-            files = request.FILES.getlist('file_field')
-            for f in files:
-                # create images based on their name. other information should
-                # be edited afterwards(?)
-                pass
-
     else:
         form = ImageForm()
 

@@ -18,11 +18,6 @@ class AlbumForm(forms.ModelForm):
 
 
 
-class MultipleImageForm(forms.Form):
-    file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-    choices=[(obj.id, obj.name) for obj in Album.objects.all()]
-    album = forms.ChoiceField(choices=choices)
-
 
 class ImageForm(forms.ModelForm):
     class Meta:
@@ -36,8 +31,8 @@ class ImageForm(forms.ModelForm):
             })
         }
 
-    choices=[(obj.id, obj.name) for obj in Album.objects.all()]
-    album = forms.ChoiceField(choices=choices)
+    # choices=[(obj.id, obj.name) for obj in Album.objects.all()]
+    # album = forms.ChoiceField(choices=choices)
 
 
 class ExtendedImageForm(forms.ModelForm):
