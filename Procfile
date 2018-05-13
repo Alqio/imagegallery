@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn webstore.wsgi --log-file -
+web: gunicorn imagegallery.wsgi --log-file -
