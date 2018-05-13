@@ -31,8 +31,8 @@ class ImageForm(forms.ModelForm):
             })
         }
 
-    # choices=[(obj.id, obj.name) for obj in Album.objects.all()]
-    # album = forms.ChoiceField(choices=choices)
+    choices=[(obj.id, obj.name) for obj in Album.objects.all()]
+    album = forms.ChoiceField(choices=choices)
 
 
 class ExtendedImageForm(forms.ModelForm):

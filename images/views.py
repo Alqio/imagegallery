@@ -122,9 +122,9 @@ def add_image(request):
             
             image.save()
 
-            #album = Album.objects.get(pk=request.POST['album'])
-            #album.images.add(image)
-            #album.save()
+            album = Album.objects.get(pk=request.POST['album'])
+            album.images.add(image)
+            album.save()
             form = ImageForm()
 
             messages.success(request, 'Kuva ladattiin onnistuneesti!')

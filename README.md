@@ -58,3 +58,20 @@ python3 manage.py runserver
 ```
 
 
+## Errors
+
+django.core.exceptions.ImproperlyConfigured: settings.DATABASES is improperly
+configured. Please supply the ENGINE value. Check settings documentation for
+more details.
+
+- comment the last line of settings.py (cant load local info from db, only on
+  heroku)
+
+
+django.db.utils.ProgrammingError: relation "images_album" does not exist
+LINE 1: ...bum"."description", "images_album"."creator" FROM "images_al...
+
+- 1. create the table manually (images_album table).
+- 2. remove old migrations
+- 3. trace the error message up. For example, the last line that was my code was in forms.py. Apparently that crashed stuff. Comment those lines out until it works :)
+

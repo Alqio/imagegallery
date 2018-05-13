@@ -89,6 +89,13 @@ DATABASES = {
     }
 }
 
+try:
+    import imagegallery.local_settings
+    print("Loaded local settings! --> using sqlite and DEBUG=True")
+except Exception as e:
+    print("could not find local settings. if you are on heroku, good! if you are running on local machine, oh boy that sucks :/")
+    pass
+
 """
 DATABASES = {
     'default': {
@@ -145,6 +152,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
-
+if not DEBUG:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
