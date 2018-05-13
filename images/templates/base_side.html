@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>
+            Saarangalleria
+        </title>
+        <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+	
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+        <script type="text/javascript" src="{% static 'imagegallery/js/login.js' %}"></script>
+        
+        <!-- font -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        
+        <!-- photoswipe  -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/photoswipe.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/default-skin/default-skin.css' %}" />
+        <script type="text/javascript" src="{% static 'images/js/photoswipe.js' %}"></script>
+        <script type="text/javascript" src="{% static 'images/js/masonry-pkg.js' %}"></script>
+        <script type="text/javascript" src="{% static 'images/js/masonry.js' %}"></script>
+        <script type="text/javascript" src="{% static 'images/js/photoswipe-ui-default.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'images/js/photoswipe-items.js' %}"></script>
+
+    </head>
+    <body> 
+        <div id="navbar" class="navbar col-md-2 align-middle" role="navigation">
+            <ul id="navbar-ul" class="nav flex-column align-middle">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Saarangalleria</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Tietoja</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                {% include 'messages.html' %}
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
+
