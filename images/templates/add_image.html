@@ -2,13 +2,13 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div id="image_upload">
-    <form class="form-horizonal" name="uploadform" enctype="multipart/form-data" method="post">
+    <form class="form-horizonal" id="form-image" name="uploadform" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <div class="col-md-6">
             {{ form.as_p }}
         
             <div class="controls">
-                <button type="submit" class="btn btn-default">Lisää kuva</button>
+                <button type="submit" id="submit-image" class="btn btn-default">Lisää kuva</button>
             </div>
         </div>
     </form>

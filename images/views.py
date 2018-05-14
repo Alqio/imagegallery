@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, HttpResponse
 from images.models import Image, Album
 from imagegallery.models import UserProfile
 from hashlib import md5
-import os
 from django.views.generic import DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -11,6 +10,8 @@ from images.forms import ImageForm, AlbumForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.db.models import Q
+
+import os, json, boto3
 
 def create_pagination(request, items_all, item_name='items'):
     nof_items_per_page = 24
@@ -107,6 +108,31 @@ def view_image(request, id, album_id=1):
     }
 
     return render(request, 'image.html', context)
+
+
+def sign_s3():
+    S3_BUCKET = os.environ.get('S3_BUCKET')
+
+    file_name = request.args.get('file_name')
+    file_type = request.args.get('file_type')
+
+    s3 = boto3.client('s3')
+
+    presigned_post = s3.generate_presigned_post(
+        Bucket=S3_BUCKET,
+        Key=file_name,
+        Fields={"acl": "public-read", "Content-Type":file_type},
+        Conditions=[
+            {"acl": "public-read"},
+            {"Content-Type": file_type}
+        ],
+        ExpiresIn=3600
+    )
+
+    return json.dumps({
+        'data':presigned_post,
+        'url': 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, file_name)
+    })
 
 
 def add_image(request):
