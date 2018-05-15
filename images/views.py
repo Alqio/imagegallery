@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from images.models import Image, Album
 from imagegallery.models import UserProfile
 from hashlib import md5
@@ -110,11 +111,15 @@ def view_image(request, id, album_id=1):
     return render(request, 'image.html', context)
 
 
-def sign_s3():
-    S3_BUCKET = os.environ.get('S3_BUCKET')
+def sign_s3(request):
+    print("got to sign_s3")
 
-    file_name = request.args.get('file_name')
-    file_type = request.args.get('file_type')
+    S3_BUCKET = os.environ.get('S3_BUCKET_NAME')
+
+    file_name = request.GET.get('file_name')
+    file_type = request.GET.get('file_type')
+    
+    print('in sign_s3, file: ', file_name, file_type)
 
     s3 = boto3.client('s3')
 
@@ -128,11 +133,11 @@ def sign_s3():
         ],
         ExpiresIn=3600
     )
+    print("got here")
 
-    return json.dumps({
-        'data':presigned_post,
-        'url': 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, file_name)
-    })
+    url = 'https://' + S3_BUCKET + ".s3.amazonaws.com/" + file_name
+    
+    return JsonResponse({'data': presigned_post, 'url': url})
 
 
 def add_image(request):

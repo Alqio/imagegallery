@@ -16,21 +16,32 @@ $(document).ready(function() {
 
     function getSignedRequest(file) {
         var xhr = new XMLHttpRequest();
-		xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
-		xhr.onreadystatechange = function(){
-			if(xhr.readyState === 4){
-				if(xhr.status === 200){
-					var response = JSON.parse(xhr.responseText);
-					uploadFile(file, response.data, response.url);
-				} else{
-                    console.log("Could not get signed URL. xhr.status: " + xhr.status);
-                    
-				}
-			}
+        console.log("File:" + file + ", name: " + file.name + ", type: " + file.type);
+		// xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+        
+        var url = "/sign_s3?file_name=" + file.name + "&file_type=" + file.type
 
-		};
+		$.getJSON(url, function(data) {
+	        console.log("success JEE");
+            console.log(data);
+    	});
+        
+        // TÄHÄN URLIIN KANS ALKUOSA DOMAINISTA (WINDOW.LOCATION)
+        $.ajax({
+            url: url,
+            type: "get",
+			dataType: "json"
+        }).done(function(data) {
+            console.log("SUCCESS, S3_SIGNED.");
+            var response = JSON.parse(data);
+            console.log(response);
+            uploadFile(file, response.data, response.data);
+        }).fail(function(request, status, error) {
+        	console.log("request: " + request + ", status: " + status + ", error: " + error);
 
-		xhr.send();
+            console.log("get request to " + url + " failed.");
+        });
+
     }
 
 	function uploadFile(file, s3Data, url){

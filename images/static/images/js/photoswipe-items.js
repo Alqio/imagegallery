@@ -12,7 +12,7 @@ $(document).ready(function() {
     }
     var album_id = $('#album-id').text(); 
     
-    console.log("/api/album/" + album_id + "/");
+    // console.log("/api/album/" + album_id + "/");
     
     var items = [];
 
@@ -23,9 +23,9 @@ $(document).ready(function() {
     }
 
     $.getJSON(path, function(data) {
-        console.log("ITEMS: ");
+        // console.log("ITEMS: ");
         data["results"].forEach(function(list_item) {
-            console.log(list_item["image"]);
+            // console.log(list_item["image"]);
             let image = {};
             let item = list_item["image"];
 		    let text = item["name"];
@@ -38,9 +38,6 @@ $(document).ready(function() {
             items.push(image);
 
         });
-        console.log("all items pushed.");
-        console.log("request done!");
-        console.log(items);
     });
 
 
@@ -50,7 +47,6 @@ $(document).ready(function() {
 
         let image_id = parent.find(".image-id").text();
         options["index"] = parseInt(image_id);
-        console.log("image_id: " + image_id);
         
         var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
         gallery.init();
