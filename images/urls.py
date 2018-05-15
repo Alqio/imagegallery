@@ -15,7 +15,7 @@ urlpatterns = [
     path('image/<int:id>/', views.view_image, name='view_image'),
     path('album/<int:album_id>/image/<int:id>/', views.view_image,
         name='view_image'),
-    path('sign_s3', views.sign_s3, name='sign_s3')
+    path('sign_s3/', views.sign_s3, name='sign_s3')
 ]
 
 

@@ -21,11 +21,17 @@ $(document).ready(function() {
         
         var url = "/sign_s3?file_name=" + file.name + "&file_type=" + file.type
 
-		$.getJSON(url, function(data) {
-	        console.log("success JEE");
-            console.log(data);
-    	});
         
+        $.get(url, function(data){
+            console.log("$.get done");
+
+            if(data.success){
+                console.log("success");
+            }else{
+                console.log("$.get failed too");
+            }
+        });
+
         // TÄHÄN URLIIN KANS ALKUOSA DOMAINISTA (WINDOW.LOCATION)
         $.ajax({
             url: url,
@@ -37,8 +43,6 @@ $(document).ready(function() {
             console.log(response);
             uploadFile(file, response.data, response.data);
         }).fail(function(request, status, error) {
-        	console.log("request: " + request + ", status: " + status + ", error: " + error);
-
             console.log("get request to " + url + " failed.");
         });
 

@@ -9,9 +9,7 @@ $(function(){
         });
     });
     $("#login-username").change(function() {
-        console.log("jou")
         $.get('/api/checkloginusername',{user: $(this).val()}, function(data){
-            console.log("changing color")
             if(data.success){
                $('#login-username').css("background-color","green");
             }else{
