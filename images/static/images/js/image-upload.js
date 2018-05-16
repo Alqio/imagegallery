@@ -20,7 +20,8 @@ $(document).ready(function() {
 		// xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
         
         var url = "/sign_s3?file_name=" + file.name + "&file_type=" + file.type
-
+        console.log("document.domain: " + document.domain);
+        
         
         $.get(url, function(data){
             console.log("$.get done");
