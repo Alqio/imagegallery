@@ -2,6 +2,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div id="image_upload">
+    <button id="nappi" type="button">clikedi clicks</button>
     <form class="form-horizonal" id="form-image" name="uploadform" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <div class="col-md-6">

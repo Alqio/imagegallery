@@ -114,7 +114,7 @@ def view_image(request, id, album_id=1):
 def sign_s3(request):
     print("got to sign_s3")
 
-    S3_BUCKET = os.environ.get('S3_BUCKET_NAME')
+    S3_BUCKET = os.environ.get('S3_BUCKET')
 
     file_name = request.GET.get('file_name')
     file_type = request.GET.get('file_type')
@@ -135,7 +135,7 @@ def sign_s3(request):
     )
     print("got here")
 
-    url = 'https://' + S3_BUCKET + ".s3.amazonaws.com/" + file_name
+    url = 'https://' + S3_BUCKET + ".s3.amazonaws.com/" + file_name + "/"
     
     return JsonResponse({'data': presigned_post, 'url': url})
 
