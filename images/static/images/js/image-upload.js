@@ -43,26 +43,28 @@ $(document).ready(function() {
 			dataType: "json"
         }).done(function(data) {
             console.log("SUCCESS, S3_SIGNED.");
-            uploadFile(file, data.data, data.url);
+            console.log(data);
+            uploadFile(file, data.data,  data.url);
         }).fail(function(request, status, error) {
             console.log("get request to " + url + " failed.");
         });
 
     }
-
+	
 	function uploadFile(file, s3Data, url){
 		var postData = new FormData();
 
+        console.log(s3Data);
+ 
 		for(key in s3Data.fields){
 			postData.append(key, s3Data.fields[key]);
 		}
 
 		postData.append('file', file);
-        console.log(postData);
 
         $.ajax({
-            type: "GET",
-            url: url,
+            type: "POST",
+            url: s3Data['url'],
             data: postData,
             processData: false,
             contentType: false,
@@ -70,13 +72,13 @@ $(document).ready(function() {
                 "Access-Control-Allow-Origin": "*"
             }
         }).done(function(data){
-            console.log("successfully posted data!");
+			document.getElementById("image-url").value = url;
+            console.log("successfully uploaded file.");
         }).fail(function(request, status, error) {
-            console.log("failed to post data to " + url);
+            console.log("failed to post data to " + s3Data['url']);
             console.log("request: " + request + ", status: " + status + ", error: " + error);
         });
 
 	}
-
 
 });
