@@ -115,6 +115,7 @@ def sign_s3(request):
     print("got to sign_s3")
 
     S3_BUCKET = os.environ.get('S3_BUCKET')
+    print(S3_BUCKET)
 
     file_name = request.GET.get('file_name')
     file_type = request.GET.get('file_type')
