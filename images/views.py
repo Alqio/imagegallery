@@ -16,6 +16,7 @@ from botocore.client import Config
 
 import os, json, boto3
 
+
 def create_pagination(request, items_all, item_name='items'):
     nof_items_per_page = 24
 
@@ -144,6 +145,7 @@ def sign_s3(request):
     ret = JsonResponse({'data': presigned_post, 'url': url})
     return ret
 
+
 def add_image(request):
     
     if request.method == 'POST':
@@ -159,7 +161,6 @@ def add_image(request):
                 messages.info(request, 'Kuvalle ei annettu kuvaa, käytetään oletusta.')
                 print("No pic provided, using default image.")
             
-            image.pic = request.POST['image-url']
             image.save()
 
             album = Album.objects.get(pk=request.POST['album'])
@@ -222,5 +223,4 @@ def search(request):
         context.update({"search_term": ("?search=" + search_term + "&")})
 
     return render(request, 'search_results.html', context)
-
 
