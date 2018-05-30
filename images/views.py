@@ -11,6 +11,8 @@ from images.forms import ImageForm, AlbumForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.db.models import Q
+from django.utils.crypto import get_random_string
+from botocore.client import Config
 
 import os, json, boto3
 
@@ -112,34 +114,36 @@ def view_image(request, id, album_id=1):
 
 
 def sign_s3(request):
-    print("got to sign_s3")
-
     S3_BUCKET = os.environ.get('S3_BUCKET')
     print(S3_BUCKET)
 
     file_name = request.GET.get('file_name')
     file_type = request.GET.get('file_type')
+
+    # this makes sure that things won't get replaced in S3
+    unique_id = get_random_string(length=8)
+    
+    file_parts = file_name.split('.', len(file_name))
+    file_name = file_parts[0] + unique_id + "." + file_parts[1]
     
     print('in sign_s3, file: ', file_name, file_type)
 
-    s3 = boto3.client('s3')
+    s3 = boto3.client('s3', 'eu-west-3', config=Config(signature_version='s3v4'))
 
     presigned_post = s3.generate_presigned_post(
-        Bucket=S3_BUCKET,
-        Key=file_name,
-        Fields={"acl": "public-read", "Content-Type":file_type},
-        Conditions=[
-            {"acl": "public-read"},
-            {"Content-Type": file_type}
+        Key = file_name,
+        Bucket = S3_BUCKET,
+        Fields = {"Content-Type": file_type},
+        Conditions = [
+          {"Content-Type": file_type}
         ],
-        ExpiresIn=3600
+        ExpiresIn = 3600
     )
-    print("got here")
 
-    url = 'https://' + S3_BUCKET + ".s3.amazonaws.com/" + file_name + "/"
-    
-    return JsonResponse({'data': presigned_post, 'url': url})
+    url = 'https://s3.eu-west-3.amazonaws.com/' + S3_BUCKET + '/' + file_name 
 
+    ret = JsonResponse({'data': presigned_post, 'url': url})
+    return ret
 
 def add_image(request):
     
@@ -156,6 +160,7 @@ def add_image(request):
                 messages.info(request, 'Kuvalle ei annettu kuvaa, käytetään oletusta.')
                 print("No pic provided, using default image.")
             
+            image.pic = request.POST['image-url']
             image.save()
 
             album = Album.objects.get(pk=request.POST['album'])
