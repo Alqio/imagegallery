@@ -1,11 +1,7 @@
 from django.http import HttpResponse, JsonResponse
-from django.core import serializers
 from django.contrib.auth.models import User
-from imagegallery.models import UserProfile
-from django.core.exceptions import ObjectDoesNotExist
 from images.models import Album, Image
 
-# Create your views here.
 
 def api_index(request):
     return HttpResponse("This is the root of API.")
@@ -40,24 +36,28 @@ def get_album_images(request, album_id):
         album = Album.objects.get(id=album_id)
         images = album.images.all()
         image_list = []
- 
+
         for image in images:
-            dd = {
-                'image': {
-                    'name': image.name,
-                    'description': image.description,
-                    'width': image.pic.width,
-                    'height': image.pic.height,
-                    'pic': image.pic.url
+            try:
+                dd = {
+                    'image': {
+                        'name': image.name,
+                        'description': image.description,
+                        'width': image.pic.width,
+                        'height': image.pic.height,
+                        'pic': image.pic.url
+                    }
                 }
-            }
-            image_list.append(dd)
+                image_list.append(dd)
+            except:
+                print("Failed to display image", image)
 
         result = JsonResponse({'results': image_list})
         
         print(result)
 
         return result 
+
 
 def get_index_images(request):
     if request.method == "GET":
@@ -66,16 +66,19 @@ def get_index_images(request):
         image_list = []
  
         for image in images:
-            dd = {
-                'image': {
-                    'name': image.name,
-                    'description': image.description,
-                    'width': image.pic.width,
-                    'height': image.pic.height,
-                    'pic': image.pic.url
+            try:
+                dd = {
+                    'image': {
+                        'name': image.name,
+                        'description': image.description,
+                        'width': image.pic.width,
+                        'height': image.pic.height,
+                        'pic': image.pic.url
+                    }
                 }
-            }
-            image_list.append(dd)
+                image_list.append(dd)
+            except:
+                print("Failed to display image", image)
 
         result = JsonResponse({'results': image_list})
         

@@ -7,3 +7,4 @@ staticfiles
 *.swp
 local_settings.py
 credentials.sh
+.idea

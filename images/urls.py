@@ -17,9 +17,3 @@ urlpatterns = [
         name='view_image'),
     path('sign_s3/', views.sign_s3, name='sign_s3')
 ]
-
-
-if settings.DEBUG: 
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
-

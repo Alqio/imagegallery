@@ -2,11 +2,6 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from images.models import Image, Album
 from imagegallery.models import UserProfile
-from hashlib import md5
-from django.views.generic import DeleteView
-from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from images.forms import ImageForm, AlbumForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
@@ -14,7 +9,9 @@ from django.db.models import Q
 from django.utils.crypto import get_random_string
 from botocore.client import Config
 
-import os, json, boto3
+import os
+import boto3
+
 
 def create_pagination(request, items_all, item_name='items'):
     nof_items_per_page = 24
@@ -70,7 +67,7 @@ def albums(request):
             image = album.images.latest('uploaded').pic.url
             print(image)
         except:
-            image = "images/default_game_img.png"
+            image = "images/default_image.png"
         pair = (album, image)
         items_all.append(pair)
 
@@ -107,7 +104,7 @@ def view_image(request, id, album_id=1):
         uploader = "Tuntematon"
     context = {
         'image': image,
-        'uploader':uploader
+        'uploader': uploader
     }
 
     return render(request, 'image.html', context)
@@ -144,6 +141,7 @@ def sign_s3(request):
     ret = JsonResponse({'data': presigned_post, 'url': url})
     return ret
 
+
 def add_image(request):
     
     if request.method == 'POST':
@@ -159,7 +157,6 @@ def add_image(request):
                 messages.info(request, 'Kuvalle ei annettu kuvaa, käytetään oletusta.')
                 print("No pic provided, using default image.")
             
-            image.pic = request.POST['image-url']
             image.save()
 
             album = Album.objects.get(pk=request.POST['album'])
@@ -222,5 +219,4 @@ def search(request):
         context.update({"search_term": ("?search=" + search_term + "&")})
 
     return render(request, 'search_results.html', context)
-
 
