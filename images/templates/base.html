@@ -35,49 +35,25 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-default" id="navbar">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Saarangalleria</a>
+        <div class="wrapper">
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h1>saarangalleria</h1>
                 </div>
 
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li id="albums"><a class="navbar-a" href="/albums/">Albumit</a></li>
-                        {% if user.is_authenticated %}
-                            {% if user.userprofile.is_admin %}
-                                <li id="publish"><a class="navbar-a" href="/add_image/">Lisää kuvia</a></li>
-                                <li id="add_album"><a class="navbar-a" href="/add_album/">Lisää albumi</a></li>
-                            {% endif %}
+                <ul class="list-unstyled components">
+                    <li class="active"><a href="/">Etusivu</a></li>
+                    <li><a href="/info/">Tietoja</a></li>
+                    {% if user.is_authenticated %}
+                        {% if user.userprofile.is_admin %}
+                            <li><a href="/add_image/">Lisää kuvia</a></li>
+                            <li><a href="/add_album/">Lisää albumi</a></li>
                         {% endif %}
-                    </ul>
-	        		<ul class="nav navbar-nav navbar-right">
-                        <li id="user">
-                        	{% if user.is_authenticated %}
-					            <a class="navbar-a" href="/edit_profile/">Kirjautuneena: {{user.username}}</a>
-                    		{% endif %}
-				        </li>
+                    {% endif %}
+                    <li><a href="/search/">Etsi</a></li>
+               </ul>
 
-                        {% if user.is_authenticated %}
-                            <li id="logout"><a class="navbar-a"
-                                href="/logout">Kirjaudu ulos</a></li>
-                        {% else %}
-                            <li id="login"><a class="navbar-a" href="/login">Kirjaudu sisään</a></li>
-                            <li id="register"><a class="navbar-a" href="/signup">Rekisteröidy</a></li>
-                        {% endif %}
-
-                    </ul>
-                    <form class="navbar-form navbar-right" type="get" action="/search_results/">
-                        <div class="form-group">
-                            <input id="search_box" type="text" placeholder="Search..." name="search">
-                        </div>
-                        <button id="search_submit" type="submit"><i class="fa fa-search"></i></button>
-                 	</form>
-
-                </div>
-
-            </div>
-        </nav>
+            </nav>
 
             <div class="container">
                 <div class="row">
@@ -86,6 +62,7 @@
                     {% endblock %}
                 </div>
             </div>
+
         </div>
     </body>
 </html>
