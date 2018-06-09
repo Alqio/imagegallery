@@ -51,8 +51,11 @@ def index(request):
     images = Image.objects.all().order_by("-id")[:12]
     context = create_pagination(request, images)
     items_amount = len(context["items"])
+
     print("items amount", items_amount)
+
     context["items"] = zip(context["items"], list(range(0, items_amount)))
+
     return render(request, 'index.html', context)
 
 
@@ -143,7 +146,11 @@ def sign_s3(request):
 
 
 def add_image(request):
-    
+
+    if not request.user.is_authenticated():
+        messages.error(request, 'Kirjaudu siään lisätäksesi kuvia')
+        return redirect('/')
+
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
 
@@ -172,8 +179,62 @@ def add_image(request):
     return render(request, 'add_image.html', {'form': form})
 
 
+def remove_image(request, image_id):
+
+    if not request.user.is_authenticated():
+        messages.error(request, 'Kirjaudu siään poistaaksesi kuvia')
+        return redirect('/')
+
+    image = Image.objects.get(id=image_id)
+
+    if image is None:
+        messages.error(request, 'Kuvan poistaminen epäonnistui')
+        return redirect('/')
+
+    for album in Album.objects.all():
+        if album.images.contains(image):
+            album.images.remove(image)
+            break
+
+    image.delete()
+
+    messages.success(request, 'Kuva poistettiin onnistuneesti')
+    return redirect('/')
+
+
+def edit_image(request, image_id):
+
+    if not request.user.is_authenticated:
+        messages.error(request, 'Kirjaudu siään muokataksesi kuvia')
+        return redirect('/')
+
+    image = Image.objects.get(id=image_id)
+
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            image.name = form.cleaned_data['name']
+            image.description = form.cleaned_data['description']
+
+            if request.FILES['pic']:
+                image.pic = request.FILES['pic']
+
+            messages.success(request, 'Kuvaa muokattiin onnistuneesti')
+
+    else:
+        form = ImageForm(None, instance=image)
+
+    return render(request, 'edit_image.html', {'form': form})
+
+
 def add_album(request):
-    
+
+    if not request.user.is_authenticated():
+        messages.error(request, 'Kirjaudu siään lisätäksesi albumeja')
+        return redirect('/')
+
     if request.method == 'POST':
         form = AlbumForm(request.POST)
         

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div id="image_edit">
+
+    <form class="form-horizonal" id="form-image" name="uploadform" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="col-md-6">
+            {{ form.as_p }}
+        
+            <input type="hidden" id="image-url" name="image-url"
+                                 value="/media/images/default_image.png">
+            <div class="controls">
+                <button type="submit" id="edit-image" class="btn btn-default">Muokkaa kuvaa</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endif %}
+{% endblock %}
+

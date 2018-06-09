@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 
 class Image(models.Model):
     name = models.CharField(max_length=30, unique=True)
@@ -8,8 +7,7 @@ class Image(models.Model):
     description = models.CharField(max_length=255)
     # the user id of the uploader
     uploader = models.IntegerField()
-    pic = models.ImageField(upload_to='images/',
-            default='images/default_image.png')
+    pic = models.ImageField(upload_to='images/', default='images/default_image.png')
 
 
 class Album(models.Model):
