@@ -9,12 +9,12 @@
         <h4>Julkaistu {{image.uploaded}}</h4>
         <h5>{{image.description}}</h5>
     </div>
-    <div class="col-md-6">
-        <img src={{image.pic.url}} class="pic">
+    <div class="col-md-5">
+        <img src="{{image.pic.url}}" class="pic">
     </div>
-    <div>
-        <button><a href="/image/edit/{{ image.id }}">Muokkaa</a></button>
-        <button><a href="/image/remove/{{ image.id }}">Poista</a></button>
+    <div class="col-md-2">
+        <a href="/image/edit/{{ image.id }}">Muokkaa</a>
+        <a href="/image/remove/{{ image.id }}">Poista</a>
     </div>
 </div>
 

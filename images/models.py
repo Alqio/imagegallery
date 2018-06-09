@@ -8,6 +8,7 @@ class Image(models.Model):
     # the user id of the uploader
     uploader = models.IntegerField()
     pic = models.ImageField(upload_to='images/', default='images/default_image.png')
+    views = models.IntegerField()
 
 
 class Album(models.Model):

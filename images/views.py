@@ -147,7 +147,7 @@ def sign_s3(request):
 
 def add_image(request):
 
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         messages.error(request, 'Kirjaudu siään lisätäksesi kuvia')
         return redirect('/')
 
@@ -181,7 +181,7 @@ def add_image(request):
 
 def remove_image(request, image_id):
 
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         messages.error(request, 'Kirjaudu siään poistaaksesi kuvia')
         return redirect('/')
 
@@ -192,7 +192,7 @@ def remove_image(request, image_id):
         return redirect('/')
 
     for album in Album.objects.all():
-        if album.images.contains(image):
+        if image in album.images.all():
             album.images.remove(image)
             break
 
@@ -231,7 +231,7 @@ def edit_image(request, image_id):
 
 def add_album(request):
 
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         messages.error(request, 'Kirjaudu siään lisätäksesi albumeja')
         return redirect('/')
 
