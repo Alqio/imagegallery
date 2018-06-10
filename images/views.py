@@ -11,6 +11,9 @@ from botocore.client import Config
 
 import os
 import boto3
+from io import StringIO
+import io
+from PIL import Image as PilImage
 
 
 def about(request):
@@ -168,15 +171,22 @@ def add_image(request):
                 pic = request.FILES['pic']
                 image.pic = pic
 
+                # image_file = io.StringIO(pic.read())
+                # pil_image = PilImage.open(image_file)
+                # w, h = pil_image.size
+                #
+                # pil_image = pil_image.resize((w/4, h/4), PilImage.ANTIALIAS)
+                # image_file = io.StringIO()
+                # pil_image.save(image_file, 'PNG', quality=90)
+                #
+                # image.compressed_pic = image_file
+
             except Exception as e:
                 print(e)
                 messages.info(request, 'Kuvalle ei annettu kuvaa, käytetään oletusta.')
                 print("No pic provided, using default image.")
 
             image.views = 0
-            image.save()
-
-            image.create_compressed_pic()
             image.save()
 
             album = Album.objects.get(pk=request.POST['album'])

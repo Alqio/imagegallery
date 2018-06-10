@@ -1,5 +1,9 @@
 from django.db import models
 from PIL import Image as PilImage
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import sys
+from django.utils.crypto import get_random_string
 
 
 class Image(models.Model):
@@ -16,16 +20,31 @@ class Image(models.Model):
     def __str__(self):
         return self.name
 
-    def create_compressed_pic(self):
-        print("size:", self.pic.size)
-        pil_pic = PilImage.open(self.pic)
+    def save(self):
 
-        print(pil_pic)
-        (width, height) = pil_pic.size
-        print(width, height)
+        file_name = self.pic.name
 
-        cropped = pil_pic.resize((int(width/4), int(height/4)), PilImage.ANTIALIAS)
-        cropped.save(self.compressed_pic)
+        unique_id = get_random_string(length=8)
+
+        file_parts = file_name.split('.', len(file_name))
+        file_name = file_parts[0] + unique_id + "." + file_parts[1]
+
+        self.pic.name = file_name
+
+        im = PilImage.open(self.pic)
+
+        w, h = im.size
+
+        output = BytesIO()
+
+        compressed_im = im.resize((int(w/4), int(h/4)), PilImage.ANTIALIAS)
+        compressed_im.save(output, format='PNG', quality=70)
+        output.seek(0)
+
+        self.compressed_pic = InMemoryUploadedFile(output, 'ImageField', self.pic.name.split('.')[0] + "_compressed.png",
+                                                   'image/png', sys.getsizeof(output), None)
+
+        super(Image, self).save()
 
 
 class Album(models.Model):
