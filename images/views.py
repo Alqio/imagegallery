@@ -13,6 +13,10 @@ import os
 import boto3
 
 
+def about(request):
+    return render(request, 'about.html')
+
+
 def create_pagination(request, items_all, item_name='items'):
     nof_items_per_page = 24
 

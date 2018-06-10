@@ -6,7 +6,7 @@ $(document).ready(function() {
         index: 0,
 		barsSize: {top:44, bottom:0},
         addCaptionHTMLFn: function(item, captionEl, isFake) {
-            captionEl.children[0].innerHTML = item.title + "<br/><small>" + item.description + "</small>";
+            captionEl.children[0].innerHTML = "<h3>" + item.title + "</h3><br/><h5>" + item.description + "</h5>";
             return true;
         }
     }

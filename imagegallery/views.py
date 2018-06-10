@@ -4,13 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from imagegallery.models import UserProfile
 from django.db import IntegrityError
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template.loader import render_to_string
-from .tokens import account_activation_token
-from django.http import HttpResponse
-from django.contrib.sites.shortcuts import get_current_site
-from django.core import mail
 
 
 def login_user(request):
@@ -35,6 +28,10 @@ def login_user(request):
 
     print("Login failed!")    
     return render(request, 'imagegallery/login.html')
+
+
+def edit_profile(request):
+    return redirect('/')
 
 
 def signup_user(request):

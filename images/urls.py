@@ -12,5 +12,6 @@ urlpatterns = [
     path('album/<int:album_id>/image/<int:id>/', views.view_image, name='view_image'),
     path('image/edit/<int:image_id>/', views.edit_image, name='edit_image'),
     path('image/remove/<int:image_id>/', views.remove_image, name='remove_image'),
+    path('about/', views.about, name='about'),
     path('sign_s3/', views.sign_s3, name='sign_s3')
 ]
