@@ -189,3 +189,4 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 if not DEBUG:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
