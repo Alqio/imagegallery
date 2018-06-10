@@ -8,3 +8,4 @@ django_heroku==0.3.1
 dj-database-url==0.5.0
 boto3==1.7.19
 botocore==1.10.19
+django-storages==1.6.6

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#form-image").submit(function(event) {
+    $("#form-image-old").submit(function(event) {
         console.log("Image submitted");
         
         // django automatically gives id #id_pic to the file field

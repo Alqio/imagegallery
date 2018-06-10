@@ -16,6 +16,7 @@ class AlbumForm(forms.ModelForm):
             })
         }
 
+
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Image

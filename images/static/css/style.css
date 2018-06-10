@@ -7,8 +7,8 @@ body {
 }
 .pic {
     border: 1px solid black;
-    width: auto;
-    height: auto;
+    max-width: 400px;
+	max-height: 400px;
     margin-left: auto;
     margin-right: auto;
     display: block;

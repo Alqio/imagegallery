@@ -2,11 +2,6 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from images.models import Image, Album
 from imagegallery.models import UserProfile
-from hashlib import md5
-from django.views.generic import DeleteView
-from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from images.forms import ImageForm, AlbumForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
@@ -14,7 +9,9 @@ from django.db.models import Q
 from django.utils.crypto import get_random_string
 from botocore.client import Config
 
-import os, json, boto3
+import os
+import boto3
+
 
 def create_pagination(request, items_all, item_name='items'):
     nof_items_per_page = 24
@@ -54,8 +51,11 @@ def index(request):
     images = Image.objects.all().order_by("-id")[:12]
     context = create_pagination(request, images)
     items_amount = len(context["items"])
+
     print("items amount", items_amount)
+
     context["items"] = zip(context["items"], list(range(0, items_amount)))
+
     return render(request, 'index.html', context)
 
 
@@ -70,7 +70,7 @@ def albums(request):
             image = album.images.latest('uploaded').pic.url
             print(image)
         except:
-            image = "images/default_game_img.png"
+            image = "images/default_image.png"
         pair = (album, image)
         items_all.append(pair)
 
@@ -107,7 +107,7 @@ def view_image(request, id, album_id=1):
         uploader = "Tuntematon"
     context = {
         'image': image,
-        'uploader':uploader
+        'uploader': uploader
     }
 
     return render(request, 'image.html', context)
@@ -145,8 +145,13 @@ def sign_s3(request):
     ret = JsonResponse({'data': presigned_post, 'url': url})
     return ret
 
+
 def add_image(request):
-    
+
+    if not request.user.is_authenticated:
+        messages.error(request, 'Kirjaudu siään lisätäksesi kuvia')
+        return redirect('/')
+
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
 
@@ -160,7 +165,6 @@ def add_image(request):
                 messages.info(request, 'Kuvalle ei annettu kuvaa, käytetään oletusta.')
                 print("No pic provided, using default image.")
             
-            image.pic = request.POST['image-url']
             image.save()
 
             album = Album.objects.get(pk=request.POST['album'])
@@ -176,8 +180,62 @@ def add_image(request):
     return render(request, 'add_image.html', {'form': form})
 
 
+def remove_image(request, image_id):
+
+    if not request.user.is_authenticated:
+        messages.error(request, 'Kirjaudu siään poistaaksesi kuvia')
+        return redirect('/')
+
+    image = Image.objects.get(id=image_id)
+
+    if image is None:
+        messages.error(request, 'Kuvan poistaminen epäonnistui')
+        return redirect('/')
+
+    for album in Album.objects.all():
+        if image in album.images.all():
+            album.images.remove(image)
+            break
+
+    image.delete()
+
+    messages.success(request, 'Kuva poistettiin onnistuneesti')
+    return redirect('/')
+
+
+def edit_image(request, image_id):
+
+    if not request.user.is_authenticated:
+        messages.error(request, 'Kirjaudu siään muokataksesi kuvia')
+        return redirect('/')
+
+    image = Image.objects.get(id=image_id)
+
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            image.name = form.cleaned_data['name']
+            image.description = form.cleaned_data['description']
+
+            if request.FILES['pic']:
+                image.pic = request.FILES['pic']
+
+            messages.success(request, 'Kuvaa muokattiin onnistuneesti')
+
+    else:
+        form = ImageForm(None, instance=image)
+
+    return render(request, 'edit_image.html', {'form': form})
+
+
 def add_album(request):
-    
+
+    if not request.user.is_authenticated:
+        messages.error(request, 'Kirjaudu siään lisätäksesi albumeja')
+        return redirect('/')
+
     if request.method == 'POST':
         form = AlbumForm(request.POST)
         
@@ -223,5 +281,4 @@ def search(request):
         context.update({"search_term": ("?search=" + search_term + "&")})
 
     return render(request, 'search_results.html', context)
-
 

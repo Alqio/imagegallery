@@ -1,8 +1,4 @@
-from django.conf.urls import url
 from django.urls import path
-from django.conf.urls.static import static
-from django.conf import settings
-
 from . import views
 
 urlpatterns = [
@@ -13,13 +9,8 @@ urlpatterns = [
     path('add_image/', views.add_image, name='add_image'),
     path('album/<int:id>/', views.view_album, name='view_album'),
     path('image/<int:id>/', views.view_image, name='view_image'),
-    path('album/<int:album_id>/image/<int:id>/', views.view_image,
-        name='view_image'),
+    path('album/<int:album_id>/image/<int:id>/', views.view_image, name='view_image'),
+    path('image/edit/<int:image_id>/', views.edit_image, name='edit_image'),
+    path('image/remove/<int:image_id>/', views.remove_image, name='remove_image'),
     path('sign_s3/', views.sign_s3, name='sign_s3')
 ]
-
-
-if settings.DEBUG: 
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
-
