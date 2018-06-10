@@ -97,6 +97,7 @@ try:
     print("Loaded local settings! --> using sqlite and DEBUG=True")
     DEBUG = get_debug()
     print(DEBUG)
+    DEBUG = True
 except Exception as e:
     print("could not find local settings. if you are on heroku, good! if you are running on local machine, oh boy that sucks :/")
     print(e)
