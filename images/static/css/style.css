@@ -116,10 +116,19 @@ body {
 	position:relative;
 	text-align:center;
 	cursor:default;
+	border: 2px solid black;
 }
 
 .col-md-4 {
-    padding: 0px;
+    /*padding: 0px;*/
+}
+
+.image-wrapper {
+	margin-bottom: 5vh;
+}
+
+.media {
+	border: 2px solid black;
 }
 
 .img-wrap .img-description-layer {
@@ -132,8 +141,9 @@ body {
 	opacity:0;
 	background-color:rgba(0,0,0,0.5);
 	-webkit-transition:all .4s ease-in-out;
-	transition:all .4s ease-in-out
+	transition:all .4s ease-in-out;
 }
+
 
 .img-wrap img {
 	display:block;

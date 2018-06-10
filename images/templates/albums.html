@@ -8,7 +8,7 @@
         {% for album in items %}
             <div class="col-md-5 media">
 
-                <img class="img-responsive img-small col-md-2" src="{{album.1}}" >
+                <a href="/album/{{ album.0.id }}"><img class="img-responsive img-small col-md-2" src="{{album.1}}" ></a>
 
                 <div class="media-body">
                     <li><h2 class="mt-0"><a href="/album/{{album.0.pk}}">{{album.0.name}}</a></h2></li>
