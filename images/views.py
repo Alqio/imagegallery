@@ -260,6 +260,22 @@ def add_album(request):
     return render(request, 'add_album.html', {'form': form})
 
 
+def remove_album(request, album_id):
+    if not request.user.is_authenticated:
+        messages.error(request, 'Kirjaudu sisään poistaaksesi albumeja')
+        return redirect('/')
+
+    album = Album.objects.get(id=album_id)
+
+    for image in album.images.all():
+        image.delete()
+
+    album.delete()
+
+    messages.success(request, 'Albumi poistettiin onnistuneesti')
+    return redirect('/')
+
+
 def search(request):
     uri = request.build_absolute_uri()
     print(uri)
