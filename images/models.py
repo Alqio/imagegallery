@@ -10,6 +10,8 @@ class Image(models.Model):
     pic = models.ImageField(upload_to='images/', default='images/default_image.png')
     views = models.IntegerField()
 
+    def __str__(self):
+        return self.name
 
 class Album(models.Model):
     name = models.CharField(max_length=30, unique=True)

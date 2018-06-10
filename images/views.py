@@ -70,7 +70,8 @@ def albums(request):
             image = album.images.latest('uploaded').pic.url
             print(image)
         except:
-            image = "images/default_image.png"
+            image = "https://" + os.environ.get("S3_BUCKET") + ".s3.amazonaws.com/media/images/default_image.png"
+
         pair = (album, image)
         items_all.append(pair)
 
@@ -164,7 +165,8 @@ def add_image(request):
             except:
                 messages.info(request, 'Kuvalle ei annettu kuvaa, käytetään oletusta.')
                 print("No pic provided, using default image.")
-            
+
+            image.views = 0
             image.save()
 
             album = Album.objects.get(pk=request.POST['album'])

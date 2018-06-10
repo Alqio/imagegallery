@@ -3,11 +3,21 @@
 
 <div id="index">
     <div class="col-md-12">
+
     <ul class="album-listing"> 
         {% for album in items %}
-            <div class="col-md-4">
-                <li><h2><a href="/album/{{album.0.pk}}">{{album.0.name}}</a></h2></li>
-                <img class="image-icon img-responsive" src="{{album.1.pic.url}}">
+            <div class="col-md-5 media">
+
+                <img class="img-responsive img-small col-md-2" src="{{album.1}}" >
+
+                <div class="media-body">
+                    <li><h2 class="mt-0"><a href="/album/{{album.0.pk}}">{{album.0.name}}</a></h2></li>
+                    <li><h4>{{ album.0.description }}</h4></li>
+                    <li>Kuvia: {{ album.0.images.count }} kpl</li>
+                    <li>Luotu: {{ album.0.created }}</li>
+                </div>
+
+
             </div>
         {% endfor %} 
     
