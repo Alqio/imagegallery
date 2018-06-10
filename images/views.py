@@ -165,12 +165,18 @@ def add_image(request):
             image.uploader = request.user.id
 
             try:
-                image.pic = request.FILES['pic']
-            except:
+                pic = request.FILES['pic']
+                image.pic = pic
+
+            except Exception as e:
+                print(e)
                 messages.info(request, 'Kuvalle ei annettu kuvaa, käytetään oletusta.')
                 print("No pic provided, using default image.")
 
             image.views = 0
+            image.save()
+
+            image.create_compressed_pic()
             image.save()
 
             album = Album.objects.get(pk=request.POST['album'])
