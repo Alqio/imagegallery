@@ -2,10 +2,18 @@
 {% block content %}
 
 <div id="album col-md-12">
-    <div class="col-md-10 images">
+    <div class="col-md-2 col-sm-12 album-info" style="float:left;">
+        <h1>{{album.name}}</h1>
+        <p>{{amount}} image(s)</p>
+        <p>Created {{album.created}}</p>
+        <p>{{album.description}}</p>
+        <p class="hidden" id="album-id">{{album.pk}}</p>
+    </div>
+
+    <div class="images col-md-10">
         {% for image in items %}
-            <div class="col-md-4">
-                <div class="img-wrap"> 
+            <div class="col-md-3 col-sm-3">
+                <div class="img-wrap"  >
                     <img class="img-responsive image-icon" src={{image.0.pic.url}}>
                     <div class="img-description-layer">
                         <h2>{{image.0.name}}</h2>
@@ -15,20 +23,13 @@
                     </div>
 
                     <p class="hidden image-id">{{image.1}}</p>
-                    
+
                 </div>
             </div>
         {% endfor %}
     </div>
 
-    <div class="col-md-2 album-info">
-        <h1>{{album.name}}</h1>
-        <p>{{amount}} image(s)</p>
-        <p>Created {{album.created}}</p>
-        <p>{{album.description}}</p>
-        <p class="hidden" id="album-id">{{album.pk}}</p>
-    </div>
-    
+
     <div class="col-md-10">
         {% include 'photoswipe.html' %}
     </div>    

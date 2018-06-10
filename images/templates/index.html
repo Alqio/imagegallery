@@ -9,7 +9,7 @@
                     <img class="img-responsive image-icon" src={{image.0.pic.url}}>
                     <div class="img-description-layer">
                         <h2>{{image.0.name}}</h2>
-                         {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
                             <h2 class="image-statistics"><a href="/image/{{ image.0.id }}">Hallinnoi</a></h2>
                         {% endif %}
                     </div>
