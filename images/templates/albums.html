@@ -10,7 +10,7 @@
 
                 <a href="/album/{{ album.0.id }}"><img class="img-responsive img-small col-md-2" src="{{album.1}}" ></a>
 
-                <div class="media-body">
+                <div class="media-body col-md-3">
                     <li><h2 class="mt-0"><a href="/album/{{album.0.pk}}">{{album.0.name}}</a></h2></li>
                     <li><h4>{{ album.0.description }}</h4></li>
                     <li>Kuvia: {{ album.0.images.count }} kpl</li>
