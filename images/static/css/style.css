@@ -124,7 +124,8 @@ body {
 }
 
 .image-wrapper {
-	margin-bottom: 5vh;
+    margin: 0px;
+	padding-bottom: 32px;
 }
 
 .media {

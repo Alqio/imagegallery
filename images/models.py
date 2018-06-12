@@ -37,7 +37,21 @@ class Image(models.Model):
 
         output = BytesIO()
 
-        compressed_im = im.resize((int(w/4), int(h/4)), PilImage.ANTIALIAS)
+        # compressed_im = im.resize((int(w/4), int(h/4)), PilImage.ANTIALIAS)
+
+        new_width = 512
+        new_height = 512
+
+        left = (w - new_width) / 2
+        top = (h - new_height) / 2
+        right = (w + new_width) / 2
+        bottom = (h + new_height) / 2
+
+        compressed_im = im.crop((left, top, right, bottom))
+
+        print(im.size)
+        print(compressed_im.size)
+
         compressed_im.save(output, format='PNG', quality=70)
         output.seek(0)
 
