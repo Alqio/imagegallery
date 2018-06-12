@@ -104,6 +104,10 @@ body {
 	height: auto;
 	padding-top:25px;
 }
+.image-statistics {
+	font-size: 18px;
+	color: white;
+}
 
 
 /* CSS animations from https://miketricking.github.io/bootstrap-image-hover/ */
