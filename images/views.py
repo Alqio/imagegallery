@@ -74,7 +74,7 @@ def albums(request):
  
     for album in albums_all:
         try:
-            image = album.images.latest('uploaded').pic.url
+            image = album.images.latest('uploaded').compressed_pic.url
             print(image)
         except:
             image = "https://" + os.environ.get("S3_BUCKET") + ".s3.amazonaws.com/media/images/default_image.png"
