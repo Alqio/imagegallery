@@ -3,18 +3,32 @@
 
 <div id="col-md-12">
     
-    <div class="jumbotron">
-        <h1 class="col-sm-9">{{image.name}}</h1>
-        <h4>Omistaja: {{uploader}}</h4>
-        <h4>Julkaistu {{image.uploaded}}</h4>
-        <h5>{{image.description}}</h5>
+    <div class="jumbotron col-md-12">
+        <h1 class="col-sm-9 col-md-9">{{image.name}}</h1>
+        <div class="col-md-3">
+            <h4>Omistaja: {{uploader}}</h4>
+            <h4>Julkaistu {{image.uploaded}}</h4>
+            <h5>{{image.description}}</h5>
+
+            <h5>Kuuluu albumeihin:</h5>
+            {% for album in albums %}
+                <h5>{{ album.name }}</h5>
+            {% endfor %}
+            </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-8">
+        <h4>Full image</h4>
         <img src="{{image.pic.url}}" class="pic">
     </div>
-    <div class="col-md-2">
-        <a href="/image/edit/{{ image.id }}">Muokkaa</a>
-        <a href="/image/remove/{{ image.id }}">Poista</a>
+    <div class="col-md-4">
+        <a href="/image/edit/{{ image.id }}" class="edit-link">Muokkaa</a>
+        <br>
+        <a href="/image/remove/{{ image.id }}" class="edit-link" >Poista (HUOM! Lopullista)</a>
+    </div>
+    <div class="col-md-8">
+        <br>
+        <h4>Cropped image</h4>
+        <img src="{{ image.compressed_pic.url }}">
     </div>
 </div>
 

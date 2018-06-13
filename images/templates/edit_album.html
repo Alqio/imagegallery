@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+    <div id="album-edit col-md-9">
+
+        <form class="form-horizonal"  name="uploadform" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div class="col-md-6">
+                {{ form.as_p }}
+
+                <div class="controls">
+                    <button type="submit" id="edit-image" class="btn btn-default">Muokkaa albumia</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-3">
+        <h2>Tilastoja:</h2>
+
+        <p>Albumiin kuuluu {{ count }} kuva(a)</p>
+
+
+        <br>
+        <a class="edit-link" href="/album/remove/{{ album.id }}">Poista albumi</a>
+        <p>HUOM! Poistaa myös kaikki albumiin kuuluvat kuvat.</p>
+    </div>
+
+{% endif %}
+{% endblock %}
+

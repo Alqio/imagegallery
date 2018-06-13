@@ -11,9 +11,6 @@ from botocore.client import Config
 
 import os
 import boto3
-from io import StringIO
-import io
-from PIL import Image as PilImage
 
 
 def about(request):
@@ -102,7 +99,7 @@ def view_album(request, id):
     return render(request, 'album_photoswipe.html', context)
 
 
-def view_image(request, id, album_id=1):
+def view_image(request, id):
     
     try:
         image = Image.objects.get(pk=id)
@@ -113,9 +110,18 @@ def view_image(request, id, album_id=1):
         uploader = UserProfile.objects.get(pk=image.uploader).user.username
     except:
         uploader = "Tuntematon"
+
+    albums = Album.objects.all()
+    belongs_to = []
+
+    for a in albums:
+        if image in a.images.all():
+            belongs_to.append(a)
+
     context = {
         'image': image,
-        'uploader': uploader
+        'uploader': uploader,
+        'albums': belongs_to
     }
 
     return render(request, 'image.html', context)
@@ -290,6 +296,36 @@ def remove_album(request, album_id):
 
     messages.success(request, 'Albumi poistettiin onnistuneesti')
     return redirect('/')
+
+
+def edit_album(request, album_id):
+
+    if not request.user.is_authenticated:
+        messages.error(request, 'Kirjaudu siään muokataksesi albumeja')
+        return redirect('/')
+
+    album = Album.objects.get(pk=album_id)
+
+    if request.method == 'POST':
+        form = AlbumForm(request.POST)
+
+        if form.is_valid():
+
+            album.name = form.cleaned_data['name']
+            album.description = form.cleaned_data['description']
+
+            messages.success(request, 'Albumia muokattiin onnistuneesti')
+
+    else:
+        form = ImageForm(None, instance=album)
+
+    context = {
+        'form': form,
+        'album': album,
+        'count': album.images.count()
+    }
+
+    return render(request, 'edit_album.html', context)
 
 
 def search(request):

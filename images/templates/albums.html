@@ -6,15 +6,19 @@
 
     <ul class="album-listing"> 
         {% for album in items %}
-            <div class="col-md-5 media">
+            <div class="col-md-6" style="border: 2px solid black;">
 
-                <a href="/album/{{ album.0.id }}"><img class="img-responsive img-small col-md-2" src="{{album.1}}" ></a>
+                <a href="/album/{{ album.0.id }}"><img class="img-responsive img-small col-md-1 pull-left" style="padding-bottom: 20px;" src="{{album.1}}" ></a>
 
-                <div class="media-body col-md-3">
-                    <li><h2 class="mt-0"><a href="/album/{{album.0.pk}}">{{album.0.name}}</a></h2></li>
+                <div class="col-md-5">
+                    <li><h2><a href="/album/{{album.0.pk}}">{{album.0.name}}</a></h2></li>
                     <li><h4>{{ album.0.description }}</h4></li>
                     <li>Kuvia: {{ album.0.images.count }} kpl</li>
                     <li>Luotu: {{ album.0.created }}</li>
+                    <br>
+                    {% if user.is_authenticated %}
+                        <li><a href="/album/edit/{{ album.0.pk }}">Muokkaa</a></li>
+                    {% endif %}
                 </div>
 
 

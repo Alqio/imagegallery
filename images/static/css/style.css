@@ -136,6 +136,10 @@ body {
 	border: 2px solid black;
 }
 
+.edit-link {
+	font-size: 36px;
+}
+
 .img-wrap .img-description-layer {
 	width:100%;
 	height:100%;

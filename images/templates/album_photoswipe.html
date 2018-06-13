@@ -2,7 +2,7 @@
 {% block content %}
 
 <div id="album col-md-12">
-    <div class="col-md-2 col-sm-12 album-info" style="float:left;">
+    <div class="col-md-2 col-xs-18 col-sm-12 album-info" style="float:left;">
         <h1>{{album.name}}</h1>
         <h3>{{album.description}}</h3>
         <p>{{amount}} image(s)</p>
@@ -13,7 +13,7 @@
 
     <div class="images col-md-10">
         {% for image in items %}
-            <div class="col-md-3 col-sm-3">
+            <div class="col-md-3 col-sm-6 col-xs-18 image-wrapper">
                 <div class="img-wrap">
                     <img class="img-responsive image-icon" src={{image.0.compressed_pic.url}}>
                     <div class="img-description-layer">
