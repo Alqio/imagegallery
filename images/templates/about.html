@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
 <div>
+    <img src="{% static 'saara.png' %}" style="width: 20%; height: 20%" class="col-md-4">
     <p>Saara pohjanpelto on ...</p>
     <p>Kuvien käyttämiseen tulee kysyä lupa. Niitä ei saa muokata tai käyttää ilman lupaa.</p>
+
 </div>
 
 {% endblock %}
