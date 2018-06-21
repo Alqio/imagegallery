@@ -52,7 +52,7 @@ def create_pagination(request, items_all, item_name='items'):
 
 
 def index(request):
-    images = Image.objects.all().order_by("-id")[:12]
+    images = Image.objects.all().order_by("-id")[:24]
     context = create_pagination(request, images)
     items_amount = len(context["items"])
 
