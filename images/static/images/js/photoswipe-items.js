@@ -10,7 +10,7 @@ $(document).ready(function() {
             return true;
         }
     }
-    var album_id = $('#album-id').text(); 
+    var album_id = $('#album-id').text();
     
     // console.log("/api/album/" + album_id + "/");
     
@@ -41,6 +41,18 @@ $(document).ready(function() {
     });
 
 
+    $(".image-icon").click(function() {
+        var parent = $(this).parent();
+        console.log(parent);
+        let image_id = parent.find(".image-id").text();
+        console.log(image_id);
+        options["index"] = parseInt(image_id);
+        console.log(options);
+
+        var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+        gallery.init();
+        console.log("gallery inited!");
+    });
 
     $(".img-description-layer").click(function() {
         var parent = $(this).parent();
