@@ -240,7 +240,7 @@ def edit_image(request, image_id):
     image = Image.objects.get(id=image_id)
 
     if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
+        form = ImageForm(request.POST, request.FILES, instance=image)
 
         if form.is_valid():
 
@@ -307,12 +307,13 @@ def edit_album(request, album_id):
     album = Album.objects.get(pk=album_id)
 
     if request.method == 'POST':
-        form = AlbumForm(request.POST)
+        form = AlbumForm(request.POST, instance=album)
 
         if form.is_valid():
 
             album.name = form.cleaned_data['name']
             album.description = form.cleaned_data['description']
+            album.save()
 
             messages.success(request, 'Albumia muokattiin onnistuneesti')
 
