@@ -317,7 +317,7 @@ def edit_album(request, album_id):
             messages.success(request, 'Albumia muokattiin onnistuneesti')
 
     else:
-        form = ImageForm(None, instance=album)
+        form = AlbumForm(None, instance=album)
 
     context = {
         'form': form,
