@@ -247,8 +247,13 @@ def edit_image(request, image_id):
             image.name = form.cleaned_data['name']
             image.description = form.cleaned_data['description']
 
-            if request.FILES['pic']:
-                image.pic = request.FILES['pic']
+
+            try:
+                if request.FILES['pic']:
+                    image.pic = request.FILES['pic']
+            except Exception as e:
+                print(e)
+
 
             messages.success(request, 'Kuvaa muokattiin onnistuneesti')
 
