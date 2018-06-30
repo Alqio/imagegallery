@@ -6,11 +6,11 @@
 
     <ul class="album-listing"> 
         {% for album in items %}
-            <div class="col-md-6" style="border: 2px solid black;">
+            <div class="col-md-6 col-sm-6 col-12">
 
-                <a href="/album/{{ album.0.id }}"><img class="img-responsive img-small col-md-1 pull-left" style="padding-bottom: 20px;" src="{{album.1}}" ></a>
+                <a href="/album/{{ album.0.id }}"><img class="img-responsive img-small col-md-1 col-sm-1 col-2" style="padding-bottom: 20px;" src="{{album.1}}" ></a>
 
-                <div class="col-md-5">
+                <div class="col-md-6 col-sm-10 col-10">
                     <li><h2><a href="/album/{{album.0.pk}}">{{album.0.name}}</a></h2></li>
                     <li><h4>{{ album.0.description }}</h4></li>
                     <li>Kuvia: {{ album.0.images.count }} kpl</li>

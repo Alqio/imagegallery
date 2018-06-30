@@ -4,9 +4,9 @@
 <div id="album col-md-12">
     <div class="col-md-10 images">
         {% for image in items %}
-            <div class="col-md-4 image-block"> 
+            <div class="col-md-4 image-block">
                 <h2>{{image.name}}</h2>
-                <a href="/image/{{image.pk}}"><img class="image_icon" src={{image.compressed_pic.url}}></a>
+                <!--<a href="/image/{{image.pk}}"><img class="image_icon" src={{image.compressed_pic.url}}></a>-->
             </div>
         {% endfor %}
     </div>

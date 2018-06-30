@@ -26,7 +26,7 @@ def login_user(request):
                 login(request, user)
                 return redirect('/')
 
-    print("Login failed!")    
+    print("Login failed!")
     return render(request, 'imagegallery/login.html')
 
 

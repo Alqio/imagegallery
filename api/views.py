@@ -61,7 +61,7 @@ def get_album_images(request, album_id):
 
 def get_index_images(request):
     if request.method == "GET":
-        images = Image.objects.all().order_by('-id')[:12]
+        images = Image.objects.all().order_by('-id')[:24]
         
         image_list = []
  

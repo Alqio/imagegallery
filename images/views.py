@@ -341,6 +341,7 @@ def search(request):
     if request.method == 'GET':  # If the form is submitted
         search_term = request.GET.get('search')
 
+        print("search term:", search_term)
         try:
             search_words = search_term.split(' ')
         except:
