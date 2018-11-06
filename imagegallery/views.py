@@ -7,9 +7,13 @@ from django.db import IntegrityError
 from django.http import HttpResponse
 
 
-def temp(request):
-    #return HttpResponse('LlWtZfqayTmm1YnFhxD4-NN0etazCx9frKMtSiUfHCU.63Xh2Yh-Eokda-COtN3WbkcYA_Xgc5DbJn355LfOgaE')
-    return render(request, 'imagegallery/test')
+from imagegallery.settings import ACME_CHALLENGE_POINT
+from imagegallery.settings import ACME_SECOND_CHALLENGE_POINT
+
+
+def acme(request):
+    st = ACME_CHALLENGE_POINT + ACME_SECOND_CHALLENGE_POINT
+    return HttpResponse(st)
 
 
 def login_user(request):

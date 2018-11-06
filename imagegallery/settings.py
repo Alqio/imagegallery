@@ -186,3 +186,6 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 if not DEBUG:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
+ACME_CHALLENGE_POINT = os.environ['ACME_CHALLENGE_POINT']
+ACME_SECOND_CHALLENGE_POINT = os.environ['ACME_SECOND_CHALLENGE_POINT']
