@@ -12,7 +12,7 @@ from imagegallery.settings import ACME_SECOND_CHALLENGE_POINT
 
 
 def acme(request):
-    st = ACME_CHALLENGE_POINT + ACME_SECOND_CHALLENGE_POINT
+    st = ACME_CHALLENGE_POINT + "." + ACME_SECOND_CHALLENGE_POINT
     return HttpResponse(st)
 
 
