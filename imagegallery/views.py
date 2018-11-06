@@ -8,7 +8,8 @@ from django.http import HttpResponse
 
 
 def temp(request):
-    return HttpResponse('LlWtZfqayTmm1YnFhxD4-NN0etazCx9frKMtSiUfHCU.63Xh2Yh-Eokda-COtN3WbkcYA_Xgc5DbJn355LfOgaE')
+    #return HttpResponse('LlWtZfqayTmm1YnFhxD4-NN0etazCx9frKMtSiUfHCU.63Xh2Yh-Eokda-COtN3WbkcYA_Xgc5DbJn355LfOgaE')
+    return render(request, 'imagegallery/test')
 
 
 def login_user(request):
