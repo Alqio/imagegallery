@@ -189,3 +189,6 @@ if not DEBUG:
 
 ACME_CHALLENGE_POINT = os.environ['ACME_CHALLENGE_POINT']
 ACME_SECOND_CHALLENGE_POINT = os.environ['ACME_SECOND_CHALLENGE_POINT']
+ACME_url = '^.well-known/acme-challenge/' + ACME_CHALLENGE_POINT
+
+print("AMCE URL:", ACME_url)
