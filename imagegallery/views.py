@@ -4,6 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from imagegallery.models import UserProfile
 from django.db import IntegrityError
+from django.http import HttpResponse
+
+
+def temp(request):
+    return HttpResponse('LlWtZfqayTmm1YnFhxD4-NN0etazCx9frKMtSiUfHCU.63Xh2Yh-Eokda-COtN3WbkcYA_Xgc5DbJn355LfOgaE')
 
 
 def login_user(request):

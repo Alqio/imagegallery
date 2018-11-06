@@ -25,7 +25,8 @@ urlpatterns = [
     # url(r'^signup/$', views.signup_user, name='signup'),
     url(r'^login/$', views.login_user, name='login'),
     url(r'^logout/$', views.logout_user, name='logout'),
-    url(r'^edit_profile/$', views.edit_profile, name='edit_profile')
+    url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
+    url(r'.well-known/acme-challenge/LlWtZfqayTmm1YnFhxD4-NN0etazCx9frKMtSiUfHCU', views.temp)
 ]
 
 
