@@ -7,15 +7,6 @@ from django.db import IntegrityError
 from django.http import HttpResponse
 
 
-from imagegallery.settings import ACME_CHALLENGE_POINT
-from imagegallery.settings import ACME_SECOND_CHALLENGE_POINT
-
-
-def acme(request):
-    st = ACME_CHALLENGE_POINT + "." + ACME_SECOND_CHALLENGE_POINT
-    return HttpResponse(st)
-
-
 def login_user(request):
     """
     Takes care of logging users in with Django's own login functionalities.

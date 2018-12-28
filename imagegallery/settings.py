@@ -144,6 +144,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+SECURE_SSL_REDIRECT = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -187,8 +188,3 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 if not DEBUG:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
-ACME_CHALLENGE_POINT = os.environ['ACME_CHALLENGE_POINT']
-ACME_SECOND_CHALLENGE_POINT = os.environ['ACME_SECOND_CHALLENGE_POINT']
-ACME_url = '^.well-known/acme-challenge/' + ACME_CHALLENGE_POINT
-
-print("AMCE URL:", ACME_url)
