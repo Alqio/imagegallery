@@ -18,8 +18,6 @@ from django.contrib import admin
 from . import views
 from django.conf import settings
 
-from imagegallery.settings import ACME_url
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('images.urls')), 
