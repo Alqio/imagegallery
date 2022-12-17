@@ -33,6 +33,8 @@ print(f"Debug: {DEBUG}, Production: {PRODUCTION}")
 
 ALLOWED_HOSTS = [
     'localhost',
+    'alqio.com',
+    'www.alqio.com',
     'saarangalleria.net',
     'www.saarangalleria.net'
 ]
