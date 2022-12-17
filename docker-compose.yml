@@ -3,18 +3,28 @@ version: '3'
 services:
   web:
     build: .
+    command: bash -c "./manage.py makemigrations && ./manage.py migrate && ./manage.py runserver 0.0.0.0:8001"
+    #command: tail -f /dev/null
+    volumes:
+      - ./:/app
     depends_on:
       - db
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+      - "8001:8001"
 
   db:
     image: postgres
+
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=hello_django
-      - POSTGRES_PASSWORD=hello_django
-      - POSTGRES_DB=hello_django_dev
-
 
 volumes:
   postgres_data:

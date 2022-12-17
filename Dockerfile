@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 
 # RUN python manage.py migrate
 
-ENTRYPOINT ["python", "manage.py", "runserver"]
+# ENTRYPOINT ["python", "manage.py", "runserver"]
