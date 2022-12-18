@@ -11,6 +11,10 @@ RUN ln /usr/bin/python3 /usr/bin/python
 RUN ln /usr/bin/pip3 /usr/bin/pip
 
 WORKDIR /app
-COPY . .
+
+# Copy only requirements.txt to avoid needing to rebuild if a project file is changed
+COPY requirements.txt .
 
 RUN pip install -r requirements.txt
+
+COPY . .
