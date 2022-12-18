@@ -21,7 +21,7 @@ services:
 
     restart: always
     ports:
-      - "6543:6543"
+      - "6543:5432"
     env_file:
       - .env
     volumes:
