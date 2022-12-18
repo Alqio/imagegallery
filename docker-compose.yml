@@ -16,10 +16,9 @@ services:
 
   db:
     image: postgres
-
     restart: always
     ports:
-      - "5432:5432"
+      - "6543:6543"
     env_file:
       - .env
     volumes:

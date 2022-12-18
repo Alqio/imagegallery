@@ -11,8 +11,8 @@ services:
     env_file:
       - .env
     environment:
-      - DEBUG=false
-      - PRODUCTION=true
+      - DEBUG=true
+      - PRODUCTION=false
     ports:
       - "5000:5000"
 
@@ -21,7 +21,7 @@ services:
 
     restart: always
     ports:
-      - "5432:5432"
+      - "6543:6543"
     env_file:
       - .env
     volumes:
