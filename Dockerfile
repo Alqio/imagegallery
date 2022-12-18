@@ -1,6 +1,7 @@
 FROM ubuntu:18.04
 
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONIOENCODING utf-8
 
 RUN apt-get update
 
