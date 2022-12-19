@@ -131,6 +131,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+SECURE_SSL_REDIRECT = False
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -153,7 +155,6 @@ if PRODUCTION:
     }
 
     AWS_S3_SIGNATURE_VERSION = 's3v4'
-    SECURE_SSL_REDIRECT = True
 
     STATICFILES_LOCATION = 'static'
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
@@ -165,6 +166,5 @@ if PRODUCTION:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATIC_URL = '/static/'
-    SECURE_SSL_REDIRECT = False
 
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
