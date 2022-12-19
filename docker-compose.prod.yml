@@ -11,8 +11,8 @@ services:
     env_file:
       - .env
     environment:
-      - DEBUG=true
-      - PRODUCTION=false
+      - DEBUG=false
+      - PRODUCTION=true
     ports:
       - "5000:5000"
 
