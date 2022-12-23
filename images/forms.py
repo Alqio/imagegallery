@@ -1,4 +1,6 @@
 from django import forms
+from django.db import OperationalError, ProgrammingError
+
 from images.models import Album, Image
 from django.forms import ModelForm, Textarea, TextInput, NumberInput
 
@@ -29,7 +31,12 @@ class ImageForm(forms.ModelForm):
             })
         }
 
-    choices = [(obj.id, obj.name) for obj in Album.objects.all()]
+    # This try except is required for makemigrations as Album relation might not exist yet
+    try:
+        choices = [(obj.id, obj.name) for obj in Album.objects.all()]
+    except (OperationalError, ProgrammingError) as e:
+        choices = []
+
     for choice in choices:
         print(choice)
     album = forms.ChoiceField(choices=choices)

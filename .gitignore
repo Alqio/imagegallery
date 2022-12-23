@@ -8,3 +8,4 @@ staticfiles
 local_settings.py
 credentials.sh
 .idea
+.env

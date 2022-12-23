@@ -3,6 +3,8 @@
 This software can be used to create an image gallery. This should be hosted in
 Heroku, or you have to change the settings.
 
+## Requirements
+This project is supported only on python versions <= 3.6.
 
 ## Installation
 
