@@ -1,13 +1,18 @@
 # ImageGallery
 
-This software can be used to create an image gallery. This should be hosted in
-Heroku, or you have to change the settings.
+This software can be used to create an image gallery. This project is deployed with docker-compose and nginx. Static files are uploaded to a S3 bucket.
 
 ## Requirements
 This project is supported only on python versions <= 3.6.
 
-## Installation
+## Running
 
+### With Docker
+
+1. Create .env file and fill in the required variables
+2. Start the containers with docker-compose up
+
+### Without Docker
 Recommended way is to have this all in a virtualenv.
 
 These instructions are for UNIX based OS. On Windows, please see how you can
@@ -17,7 +22,7 @@ Windows 10 Bash.
 
 Install virtualenv:
 ```
-[sudo] pip3 install virtualenv
+pip3 install virtualenv
 ```
 
 
